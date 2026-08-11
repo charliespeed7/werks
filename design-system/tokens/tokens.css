@@ -1,0 +1,465 @@
+/* =============================================================================
+   WERKS DESIGN TOKENS
+   Tier 1 (primitive) + Tier 2 (semantic). Only Tier 2 is redefined per theme.
+   Never reference a Tier 1 token in a component. Always use the semantic name.
+
+   Contrast: every text/background pair defined here is verified by
+   `node tokens/verify-contrast.mjs`. If you add a pair, add it to that file.
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   TIER 1 — PRIMITIVES
+   Theme-independent raw values. These never change between light and dark.
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* --- Paper (warm neutral lights) ------------------------------------------ */
+  --w-white:        #FFFFFF;
+  --w-paper-50:     #FBFAF8;
+  --w-paper-100:    #F5F3EF;
+  --w-paper-200:    #EBE8E2;
+  --w-paper-300:    #DCD8D0;
+  --w-paper-400:    #C2BDB3;
+
+  /* --- Ink (warm neutral darks) --------------------------------------------- */
+  --w-ink-400:      #96918A;
+  --w-ink-450:      #8C877F;
+  --w-ink-500:      #78736C;
+  --w-ink-600:      #5C5851;
+  --w-ink-700:      #403C36;
+  --w-ink-800:      #2A2724;
+  --w-ink-900:      #1A1917;
+  --w-ink-950:      #0F0E0D;
+
+  /* --- Volt (the brand signal. See foundations/01-colour.md for the 2% rule) - */
+  --w-volt-100:     #F2FFD1;
+  --w-volt-300:     #DCFF8A;
+  --w-volt-500:     #C3FF33;   /* The Dot. The campaign neon. */
+  --w-volt-700:     #7FAD00;
+  --w-volt-900:     #3F5600;   /* the only volt safe as text on paper */
+
+  /* --- Semantic hues. Used sparingly, and never as decoration. --------------- */
+  --w-green-100:    #DCF3E9;
+  --w-green-300:    #8FD9BC;
+  --w-green-600:    #0E7C55;
+  --w-green-800:    #0A4F37;
+
+  --w-amber-100:    #FBEFD9;
+  --w-amber-300:    #F0C77A;
+  --w-amber-600:    #8F5A00;
+  --w-amber-800:    #6E4400;
+
+  --w-red-100:      #FBE5E1;
+  --w-red-300:      #F0A79B;
+  --w-red-600:      #B0271B;
+  --w-red-800:      #731810;
+
+  --w-blue-100:     #E2EEF8;
+  --w-blue-300:     #9DC3E4;
+  --w-blue-600:     #1A5C96;
+  --w-blue-800:     #123C63;
+
+  /* --- Dark-theme surfaces --------------------------------------------------- */
+  --w-dk-bg:        #0F0E0D;
+  --w-dk-surface:   #1A1917;
+  --w-dk-raised:    #26231F;
+  --w-dk-border:    #35312C;
+  --w-dk-border-hi: #6E6860;
+  --w-dk-text:      #F5F3EF;
+  --w-dk-text-2:    #A8A29A;
+
+  /* --- Type families ---------------------------------------------------------
+     Display  : Archivo        (variable 100-900) — headlines, numbers, wordmark
+     Text     : Inter          (variable)         — all UI, all body
+     Editorial: Newsreader     (variable, optical)— Daily Brief only
+     Mono     : JetBrains Mono                    — serials, refs, meter readings
+     -------------------------------------------------------------------------- */
+  --w-font-display:  "Archivo", "Archivo Variable", system-ui, sans-serif;
+  --w-font-text:     "Inter", "Inter Variable", system-ui, -apple-system, sans-serif;
+  --w-font-editorial:"Newsreader", "Newsreader Variable", Georgia, serif;
+  --w-font-mono:     "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* --- Type scale (mobile-first; see 02-typography.md for desktop overrides) -- */
+  --w-text-2xs:   0.6875rem;  /* 11px  legal, audit stamps            */
+  --w-text-xs:    0.75rem;    /* 12px  timestamps, captions           */
+  --w-text-sm:    0.875rem;   /* 14px  labels, metadata               */
+  --w-text-base:  1rem;       /* 16px  UI default                     */
+  --w-text-md:    1.0625rem;  /* 17px  reading: messages, drafts      */
+  --w-text-lg:    1.25rem;    /* 20px  card titles                    */
+  --w-text-xl:    1.5rem;     /* 24px  screen titles                  */
+  --w-text-2xl:   1.875rem;   /* 30px  display small                  */
+  --w-text-3xl:   2.375rem;   /* 38px  display                        */
+  --w-text-4xl:   3rem;       /* 48px  money hero                     */
+  --w-text-5xl:   4rem;       /* 64px  marketing                      */
+
+  --w-leading-tight:   1.05;
+  --w-leading-snug:    1.2;
+  --w-leading-normal:  1.45;
+  --w-leading-relaxed: 1.6;
+
+  --w-tracking-tighter: -0.03em;  /* 38px and above          */
+  --w-tracking-tight:   -0.02em;  /* 24-30px                 */
+  --w-tracking-snug:    -0.01em;  /* 17-20px                 */
+  --w-tracking-normal:  0;        /* body                    */
+  --w-tracking-wide:    0.02em;   /* small caps labels       */
+  --w-tracking-widest:  0.08em;   /* eyebrow / overline      */
+
+  --w-weight-regular:  400;
+  --w-weight-medium:   500;
+  --w-weight-semibold: 600;
+  --w-weight-bold:     700;
+  --w-weight-black:    800;  /* display only, never below 24px */
+
+  /* --- Space. 4px base. Never use a value that is not on this scale. --------- */
+  --w-space-0:    0;
+  --w-space-1:    0.25rem;   /*  4 */
+  --w-space-2:    0.5rem;    /*  8 */
+  --w-space-3:    0.75rem;   /* 12 */
+  --w-space-4:    1rem;      /* 16 — the default gutter */
+  --w-space-5:    1.25rem;   /* 20 */
+  --w-space-6:    1.5rem;    /* 24 */
+  --w-space-8:    2rem;      /* 32 */
+  --w-space-10:   2.5rem;    /* 40 */
+  --w-space-12:   3rem;      /* 48 */
+  --w-space-16:   4rem;      /* 64 */
+  --w-space-20:   5rem;      /* 80 */
+  --w-space-24:   6rem;      /* 96 */
+
+  /* --- Radius ---------------------------------------------------------------- */
+  --w-radius-xs:   4px;
+  --w-radius-sm:   6px;
+  --w-radius-md:   10px;
+  --w-radius-lg:   14px;
+  --w-radius-xl:   20px;
+  --w-radius-2xl:  28px;
+  --w-radius-full: 999px;
+
+  /* --- Control heights. 48px is the floor. See patterns/mobile-first.md. ----- */
+  --w-control-sm:  2.5rem;   /* 40 — inline only, never a primary action */
+  --w-control-md:  3rem;     /* 48 — minimum touch target                */
+  --w-control-lg:  3.5rem;   /* 56 — default on mobile                   */
+  --w-control-xl:  4rem;     /* 64 — primary action, glove-safe          */
+
+  --w-icon-sm:   1rem;       /* 16 */
+  --w-icon-md:   1.25rem;    /* 20 */
+  --w-icon-lg:   1.5rem;     /* 24 — default */
+  --w-icon-xl:   1.75rem;    /* 28 */
+  --w-icon-stroke: 1.75;
+
+  /* --- Elevation. Werks separates with borders first, shadow second. --------- */
+  --w-shadow-0: none;
+  --w-shadow-1: 0 1px 2px rgba(26, 25, 23, 0.06);
+  --w-shadow-2: 0 2px 8px rgba(26, 25, 23, 0.08);
+  --w-shadow-3: 0 8px 24px rgba(26, 25, 23, 0.10);
+  --w-shadow-4: 0 -8px 32px rgba(26, 25, 23, 0.14);  /* sheets rising */
+
+  /* --- Motion. Calm: fast in, no bounce, nothing loops except listening. ----- */
+  --w-duration-instant: 80ms;
+  --w-duration-quick:   120ms;
+  --w-duration-base:    180ms;
+  --w-duration-calm:    240ms;
+  --w-duration-sheet:   280ms;
+  --w-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --w-ease-enter:    cubic-bezier(0.05, 0.7, 0.1, 1);
+  --w-ease-exit:     cubic-bezier(0.3, 0, 0.8, 0.15);
+
+  /* --- Layers ---------------------------------------------------------------- */
+  --w-z-base:   0;
+  --w-z-sticky: 100;
+  --w-z-dock:   200;
+  --w-z-scrim:  300;
+  --w-z-sheet:  310;
+  --w-z-toast:  400;
+  --w-z-modal:  500;
+
+  /* --- Layout ---------------------------------------------------------------- */
+  --w-gutter:        var(--w-space-4);
+  --w-max-content:   34rem;  /* 544px — reading measure on tablet/desktop */
+  --w-max-page:      72rem;
+  --w-safe-bottom:   env(safe-area-inset-bottom, 0px);
+  --w-safe-top:      env(safe-area-inset-top, 0px);
+}
+
+/* -----------------------------------------------------------------------------
+   TIER 2 — SEMANTIC (light theme, the default)
+   These are the only tokens a component may reference.
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Surfaces */
+  --w-bg-canvas:        var(--w-paper-50);
+  --w-bg-surface:       var(--w-white);
+  --w-bg-sunken:        var(--w-paper-100);
+  --w-bg-raised:        var(--w-white);
+  --w-bg-inverse:       var(--w-ink-900);
+  --w-bg-scrim:         rgba(15, 14, 13, 0.44);
+  --w-bg-hover:         var(--w-paper-100);
+  --w-bg-pressed:       var(--w-paper-200);
+  --w-bg-selected:      var(--w-paper-200);
+  --w-bg-disabled:      var(--w-paper-200);
+
+  /* Text */
+  --w-text-primary:     var(--w-ink-900);
+  --w-text-secondary:   var(--w-ink-600);
+  --w-text-tertiary:    var(--w-ink-500);
+  --w-text-placeholder: var(--w-ink-500);
+  --w-text-disabled:    var(--w-ink-400);
+  --w-text-inverse:     var(--w-paper-50);
+  --w-text-link:        var(--w-ink-900);
+
+  /* Borders */
+  --w-border-subtle:    var(--w-paper-200);
+  --w-border-default:   var(--w-paper-300);
+  --w-border-control:   var(--w-ink-450);   /* 3.42:1 — meets WCAG 1.4.11 */
+  --w-border-strong:    var(--w-ink-900);
+  --w-border-inverse:   var(--w-ink-700);
+
+  /* Action: primary is ink, not colour. Confidence, not shouting. */
+  --w-action-primary-bg:          var(--w-ink-900);
+  --w-action-primary-bg-hover:    var(--w-ink-800);
+  --w-action-primary-bg-pressed:  var(--w-ink-700);
+  --w-action-primary-fg:          var(--w-paper-50);
+
+  --w-action-secondary-bg:         transparent;
+  --w-action-secondary-bg-hover:   var(--w-paper-100);
+  --w-action-secondary-border:     var(--w-ink-450);
+  --w-action-secondary-fg:         var(--w-ink-900);
+
+  --w-action-quiet-fg:             var(--w-ink-600);
+  --w-action-quiet-bg-hover:       var(--w-paper-100);
+
+  --w-action-destructive-bg:       var(--w-red-600);
+  --w-action-destructive-fg:       var(--w-white);
+  --w-action-destructive-quiet-fg: var(--w-red-600);
+
+  /* Signal — The Dot. Live, listening, needs-you, active. Nothing else. */
+  --w-signal:           var(--w-volt-500);
+  --w-signal-on-ink:    var(--w-volt-500);
+  --w-signal-text:      var(--w-volt-900);  /* the only volt legible on paper */
+  --w-signal-tint:      var(--w-volt-100);
+
+  /* Status */
+  --w-status-positive-fg:     var(--w-green-800);
+  --w-status-positive-bg:     var(--w-green-100);
+  --w-status-positive-strong: var(--w-green-600);
+
+  --w-status-attention-fg:     var(--w-amber-800);
+  --w-status-attention-bg:     var(--w-amber-100);
+  --w-status-attention-strong: var(--w-amber-600);
+
+  --w-status-critical-fg:      var(--w-red-800);
+  --w-status-critical-bg:      var(--w-red-100);
+  --w-status-critical-strong:  var(--w-red-600);
+
+  --w-status-scheduled-fg:     var(--w-blue-800);
+  --w-status-scheduled-bg:     var(--w-blue-100);
+  --w-status-scheduled-strong: var(--w-blue-600);
+
+  /* Neutral status — "waiting for you". Deliberately not amber. */
+  --w-status-neutral-fg:  var(--w-ink-900);
+  --w-status-neutral-bg:  var(--w-paper-200);
+
+  /* Focus. Always visible. Never removed. */
+  --w-focus-ring:        var(--w-ink-900);
+  --w-focus-ring-offset: var(--w-bg-canvas);
+  --w-focus-ring-width:  3px;
+
+  /* Elevation aliases */
+  --w-elevation-card:  var(--w-shadow-1);
+  --w-elevation-dock:  var(--w-shadow-3);
+  --w-elevation-sheet: var(--w-shadow-4);
+}
+
+/* -----------------------------------------------------------------------------
+   TIER 2 — DARK THEME
+   For evening, the van at night, and plant rooms. Light is still the default:
+   the app is used outdoors in daylight more often than not.
+
+   Three states are handled: explicit dark, explicit light, and system default.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --w-bg-canvas:        var(--w-dk-bg);
+    --w-bg-surface:       var(--w-dk-surface);
+    --w-bg-sunken:        var(--w-dk-bg);
+    --w-bg-raised:        var(--w-dk-raised);
+    --w-bg-inverse:       var(--w-paper-50);
+    --w-bg-scrim:         rgba(0, 0, 0, 0.64);
+    --w-bg-hover:         var(--w-dk-raised);
+    --w-bg-pressed:       var(--w-dk-border);
+    --w-bg-selected:      var(--w-dk-raised);
+    --w-bg-disabled:      var(--w-dk-raised);
+
+    --w-text-primary:     var(--w-dk-text);
+    --w-text-secondary:   var(--w-dk-text-2);
+    --w-text-tertiary:    var(--w-ink-450);
+    --w-text-placeholder: var(--w-ink-450);
+    --w-text-disabled:    var(--w-ink-500);
+    --w-text-inverse:     var(--w-ink-900);
+    --w-text-link:        var(--w-dk-text);
+
+    --w-border-subtle:    var(--w-dk-border);
+    --w-border-default:   var(--w-dk-border);
+    --w-border-control:   var(--w-dk-border-hi);
+    --w-border-strong:    var(--w-dk-text);
+    --w-border-inverse:   var(--w-paper-300);
+
+    --w-action-primary-bg:         var(--w-paper-50);
+    --w-action-primary-bg-hover:   var(--w-paper-200);
+    --w-action-primary-bg-pressed: var(--w-paper-300);
+    --w-action-primary-fg:         var(--w-ink-900);
+
+    --w-action-secondary-bg-hover: var(--w-dk-raised);
+    --w-action-secondary-border:   var(--w-dk-border-hi);
+    --w-action-secondary-fg:       var(--w-dk-text);
+
+    --w-action-quiet-fg:           var(--w-dk-text-2);
+    --w-action-quiet-bg-hover:     var(--w-dk-raised);
+
+    --w-action-destructive-bg:       var(--w-red-300);
+    --w-action-destructive-fg:       var(--w-ink-900);
+    --w-action-destructive-quiet-fg: var(--w-red-300);
+
+    --w-signal-text:      var(--w-volt-500);
+    --w-signal-tint:      var(--w-dk-raised);
+
+    --w-status-positive-fg:     var(--w-green-300);
+    --w-status-positive-bg:     rgba(14, 124, 85, 0.18);
+    --w-status-positive-strong: var(--w-green-300);
+
+    --w-status-attention-fg:     var(--w-amber-300);
+    --w-status-attention-bg:     rgba(143, 90, 0, 0.24);
+    --w-status-attention-strong: var(--w-amber-300);
+
+    --w-status-critical-fg:      var(--w-red-300);
+    --w-status-critical-bg:      rgba(176, 39, 27, 0.22);
+    --w-status-critical-strong:  var(--w-red-300);
+
+    --w-status-scheduled-fg:     var(--w-blue-300);
+    --w-status-scheduled-bg:     rgba(26, 92, 150, 0.24);
+    --w-status-scheduled-strong: var(--w-blue-300);
+
+    --w-status-neutral-fg:  var(--w-dk-text);
+    --w-status-neutral-bg:  var(--w-dk-raised);
+
+    --w-focus-ring:        var(--w-volt-500);
+    --w-focus-ring-offset: var(--w-dk-bg);
+
+    /* Shadow does almost nothing on near-black. Borders carry elevation. */
+    --w-elevation-card:  none;
+    --w-elevation-dock:  0 8px 24px rgba(0, 0, 0, 0.5);
+    --w-elevation-sheet: 0 -8px 32px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Explicit dark selection wins in both directions. */
+:root[data-theme="dark"] {
+  --w-bg-canvas:        var(--w-dk-bg);
+  --w-bg-surface:       var(--w-dk-surface);
+  --w-bg-sunken:        var(--w-dk-bg);
+  --w-bg-raised:        var(--w-dk-raised);
+  --w-bg-inverse:       var(--w-paper-50);
+  --w-bg-scrim:         rgba(0, 0, 0, 0.64);
+  --w-bg-hover:         var(--w-dk-raised);
+  --w-bg-pressed:       var(--w-dk-border);
+  --w-bg-selected:      var(--w-dk-raised);
+  --w-bg-disabled:      var(--w-dk-raised);
+
+  --w-text-primary:     var(--w-dk-text);
+  --w-text-secondary:   var(--w-dk-text-2);
+  --w-text-tertiary:    var(--w-ink-450);
+  --w-text-placeholder: var(--w-ink-450);
+  --w-text-disabled:    var(--w-ink-500);
+  --w-text-inverse:     var(--w-ink-900);
+  --w-text-link:        var(--w-dk-text);
+
+  --w-border-subtle:    var(--w-dk-border);
+  --w-border-default:   var(--w-dk-border);
+  --w-border-control:   var(--w-dk-border-hi);
+  --w-border-strong:    var(--w-dk-text);
+  --w-border-inverse:   var(--w-paper-300);
+
+  --w-action-primary-bg:         var(--w-paper-50);
+  --w-action-primary-bg-hover:   var(--w-paper-200);
+  --w-action-primary-bg-pressed: var(--w-paper-300);
+  --w-action-primary-fg:         var(--w-ink-900);
+
+  --w-action-secondary-bg-hover: var(--w-dk-raised);
+  --w-action-secondary-border:   var(--w-dk-border-hi);
+  --w-action-secondary-fg:       var(--w-dk-text);
+
+  --w-action-quiet-fg:           var(--w-dk-text-2);
+  --w-action-quiet-bg-hover:     var(--w-dk-raised);
+
+  --w-action-destructive-bg:       var(--w-red-300);
+  --w-action-destructive-fg:       var(--w-ink-900);
+  --w-action-destructive-quiet-fg: var(--w-red-300);
+
+  --w-signal-text:      var(--w-volt-500);
+  --w-signal-tint:      var(--w-dk-raised);
+
+  --w-status-positive-fg:     var(--w-green-300);
+  --w-status-positive-bg:     rgba(14, 124, 85, 0.18);
+  --w-status-positive-strong: var(--w-green-300);
+
+  --w-status-attention-fg:     var(--w-amber-300);
+  --w-status-attention-bg:     rgba(143, 90, 0, 0.24);
+  --w-status-attention-strong: var(--w-amber-300);
+
+  --w-status-critical-fg:      var(--w-red-300);
+  --w-status-critical-bg:      rgba(176, 39, 27, 0.22);
+  --w-status-critical-strong:  var(--w-red-300);
+
+  --w-status-scheduled-fg:     var(--w-blue-300);
+  --w-status-scheduled-bg:     rgba(26, 92, 150, 0.24);
+  --w-status-scheduled-strong: var(--w-blue-300);
+
+  --w-status-neutral-fg:  var(--w-dk-text);
+  --w-status-neutral-bg:  var(--w-dk-raised);
+
+  --w-focus-ring:        var(--w-volt-500);
+  --w-focus-ring-offset: var(--w-dk-bg);
+
+  --w-elevation-card:  none;
+  --w-elevation-dock:  0 8px 24px rgba(0, 0, 0, 0.5);
+  --w-elevation-sheet: 0 -8px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* -----------------------------------------------------------------------------
+   BASE
+   -------------------------------------------------------------------------- */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  font-size: 100%;             /* respect the OS text size. Never lock this. */
+}
+
+body {
+  margin: 0;
+  background: var(--w-bg-canvas);
+  color: var(--w-text-primary);
+  font-family: var(--w-font-text);
+  font-size: var(--w-text-base);
+  line-height: var(--w-leading-normal);
+  font-feature-settings: "cv05" 1, "ss01" 1;  /* Inter: single-storey l, no ambiguity */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Numbers in tables, money and lists must not jitter. */
+.w-tabular { font-variant-numeric: tabular-nums; }
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: var(--w-focus-ring-width) solid var(--w-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--w-radius-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

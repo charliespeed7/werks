@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Werks Design System</title>
+
+<!-- Preview only. Production self-hosts these as woff2 subsets. See foundations/02-typography.md -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../tokens/tokens.css">
+<link rel="stylesheet" href="../components/werks.css">
+
+<style>
+  /* Preview page chrome only. Not part of the design system. */
+  body { padding-bottom: var(--w-space-24); }
+  .pv-wrap { max-width: 68rem; margin: 0 auto; padding: 0 var(--w-space-5); }
+  .pv-top { position: sticky; top: 0; z-index: 100; background: var(--w-bg-canvas);
+    border-bottom: 1px solid var(--w-border-subtle); padding: var(--w-space-4) 0; margin-bottom: var(--w-space-10); }
+  .pv-top__inner { max-width: 68rem; margin: 0 auto; padding: 0 var(--w-space-5);
+    display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-4); }
+  .pv-sec { padding: var(--w-space-12) 0; border-top: 1px solid var(--w-border-subtle); }
+  .pv-sec:first-of-type { border-top: 0; }
+  .pv-sec > h2 { font-family: var(--w-font-display); font-size: var(--w-text-2xl); font-weight: 700;
+    letter-spacing: -0.02em; margin: 0 0 var(--w-space-2); }
+  .pv-sec > .pv-lede { font-size: var(--w-text-md); color: var(--w-text-secondary);
+    max-width: 34rem; margin: 0 0 var(--w-space-8); }
+  .pv-h3 { font-family: var(--w-font-display); font-size: var(--w-text-lg); font-weight: 600;
+    margin: var(--w-space-10) 0 var(--w-space-4); letter-spacing: -0.01em; }
+  .pv-h3:first-of-type { margin-top: 0; }
+  .pv-note { font-size: var(--w-text-sm); color: var(--w-text-secondary); margin: var(--w-space-2) 0 var(--w-space-4); max-width: 34rem; }
+  .pv-grid { display: grid; gap: var(--w-space-4); }
+  .pv-grid--3 { grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+  .pv-grid--4 { grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); }
+  .pv-grid--2 { grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); }
+  .pv-panel { background: var(--w-bg-surface); border: 1px solid var(--w-border-subtle);
+    border-radius: var(--w-radius-lg); padding: var(--w-space-5); }
+  .pv-swatch { border: 1px solid var(--w-border-subtle); border-radius: var(--w-radius-md); overflow: hidden; }
+  .pv-swatch__chip { height: 4.5rem; }
+  .pv-swatch__meta { padding: var(--w-space-3); background: var(--w-bg-surface); }
+  .pv-swatch__name { font-size: var(--w-text-sm); font-weight: 500; }
+  .pv-swatch__hex { font-family: var(--w-font-mono); font-size: var(--w-text-xs); color: var(--w-text-secondary); }
+  .pv-spec { display: flex; align-items: baseline; gap: var(--w-space-4); padding: var(--w-space-3) 0;
+    border-bottom: 1px solid var(--w-border-subtle); }
+  .pv-spec__tag { font-family: var(--w-font-mono); font-size: var(--w-text-xs); color: var(--w-text-secondary);
+    width: 8.5rem; flex-shrink: 0; }
+  .pv-phone { width: 22rem; max-width: 100%; border: 1px solid var(--w-border-default);
+    border-radius: var(--w-radius-2xl); overflow: hidden; background: var(--w-bg-canvas);
+    box-shadow: var(--w-shadow-3); display: flex; flex-direction: column; height: 50rem; position: relative; }
+  .pv-phone__scroll { flex: 1; overflow-y: auto; padding: var(--w-space-4);
+    padding-bottom: 7.5rem; }
+  .pv-phone__dock { position: absolute; left: 0; right: 0; bottom: 3.5rem;
+    display: flex; justify-content: center; pointer-events: none; }
+  .pv-phones { display: flex; gap: var(--w-space-6); flex-wrap: wrap; }
+  .pv-do-dont { display: grid; gap: var(--w-space-4); grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); }
+  .pv-do { border-left: 3px solid var(--w-status-positive-strong); padding-left: var(--w-space-4); }
+  .pv-dont { border-left: 3px solid var(--w-status-critical-strong); padding-left: var(--w-space-4); }
+  .pv-tag { font-size: var(--w-text-2xs); font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--w-text-secondary); }
+  .pv-inline { display: flex; flex-wrap: wrap; gap: var(--w-space-3); align-items: center; }
+  .pv-toc { display: flex; flex-wrap: wrap; gap: var(--w-space-2); margin-bottom: var(--w-space-12); }
+  .pv-toc a { font-size: var(--w-text-sm); color: var(--w-text-secondary); text-decoration: none;
+    border: 1px solid var(--w-border-default); border-radius: var(--w-radius-full);
+    padding: var(--w-space-2) var(--w-space-3); }
+  .pv-toc a:hover { color: var(--w-text-primary); border-color: var(--w-border-control); }
+  .pv-target { display: flex; align-items: center; justify-content: center;
+    background: var(--w-bg-sunken); border: 1px dashed var(--w-border-control);
+    border-radius: var(--w-radius-sm); font-family: var(--w-font-mono); font-size: var(--w-text-xs);
+    color: var(--w-text-secondary); }
+  table.pv-table { width: 100%; border-collapse: collapse; font-size: var(--w-text-sm); }
+  table.pv-table th { text-align: left; font-weight: 500; color: var(--w-text-secondary);
+    padding: var(--w-space-2) var(--w-space-3) var(--w-space-2) 0; border-bottom: 1px solid var(--w-border-default); }
+  table.pv-table td { padding: var(--w-space-3) var(--w-space-3) var(--w-space-3) 0;
+    border-bottom: 1px solid var(--w-border-subtle); vertical-align: top; }
+</style>
+</head>
+<body>
+
+<!-- icon sprite -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.7 2.8L16 9.5"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 11V5.5a1.5 1.5 0 0 1 3 0V11m0 0V4.5a1.5 1.5 0 0 1 3 0V11m0 0V6.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L5.4 15a1.6 1.6 0 0 1 2.6-1.8"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-cloud-off" viewBox="0 0 24 24"><path d="M6.5 18A4.5 4.5 0 0 1 6 9a6 6 0 0 1 10-3M18 9.2a4.5 4.5 0 0 1-.5 8.8H10M3 3l18 18"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16h.01"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3s5 4.2 5 9a5 5 0 0 1-10 0c0-1.7.8-3.2 1.7-4.3C9.4 9.9 10.5 11 11 11c.5-2.5.3-5.5 1-8z"/></symbol>
+  <symbol id="i-boiler" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="12" rx="2"/><path d="M8 8h8M8 11.5h4M9 16v4M15 16v4"/></symbol>
+  <symbol id="i-arrow-ur" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></symbol>
+</svg>
+
+<div class="pv-top">
+  <div class="pv-top__inner">
+    <span class="w-wordmark" style="font-size:1.375rem">WERKS<span class="w-wordmark__stop">.</span></span>
+    <div class="pv-inline">
+      <span class="w-meta">Design system v1.0</span>
+      <button class="w-btn w-btn--secondary w-btn--sm" id="theme-toggle" aria-label="Switch theme">Dark</button>
+    </div>
+  </div>
+</div>
+
+<div class="pv-wrap">
+
+  <div class="pv-toc">
+    <a href="#brand">Brand</a><a href="#colour">Colour</a><a href="#type">Typography</a>
+    <a href="#space">Space</a><a href="#icons">Icons</a><a href="#buttons">Buttons</a>
+    <a href="#inputs">Inputs</a><a href="#status">Status</a><a href="#cards">Cards</a>
+    <a href="#voice">Voice</a><a href="#nav">Navigation</a><a href="#sheets">Sheets</a>
+    <a href="#screens">Screens</a>
+  </div>
+
+  <!-- ===================================================== BRAND -->
+  <section class="pv-sec" id="brand">
+    <h2>Brand</h2>
+    <p class="pv-lede">Trustworthy, calm, simple, proactive. Not noisy. The campaign shouts on a billboard so the product never has to shout on a phone.</p>
+
+    <div class="pv-grid pv-grid--4">
+      <div class="pv-panel"><div class="w-overline">Trustworthy</div><p class="w-body" style="margin-top:8px">You can see exactly what went out, before and after.</p></div>
+      <div class="pv-panel"><div class="w-overline">Calm</div><p class="w-body" style="margin-top:8px">One thing at a time. Silence is the default.</p></div>
+      <div class="pv-panel"><div class="w-overline">Simple</div><p class="w-body" style="margin-top:8px">The next action is obvious without reading.</p></div>
+      <div class="pv-panel"><div class="w-overline">Proactive</div><p class="w-body" style="margin-top:8px">The decision arrives already prepared.</p></div>
+    </div>
+
+    <h3 class="pv-h3">The wordmark</h3>
+    <p class="pv-note">The full stop is Volt. Everywhere, always. It is the only element permitted to be Volt in the product.</p>
+    <div class="pv-grid pv-grid--3">
+      <div class="pv-panel" style="display:flex;align-items:center;justify-content:center;min-height:9rem">
+        <span class="w-wordmark" style="font-size:2.5rem">WERKS<span class="w-wordmark__stop">.</span></span>
+      </div>
+      <div class="pv-panel" style="background:var(--w-ink-900);display:flex;align-items:center;justify-content:center;min-height:9rem">
+        <span class="w-wordmark" style="font-size:2.5rem;color:var(--w-paper-50)">WERKS<span class="w-wordmark__stop">.</span></span>
+      </div>
+      <div class="pv-panel" style="display:flex;align-items:center;justify-content:center;min-height:9rem;gap:16px">
+        <div style="width:5.5rem;height:5.5rem;border-radius:20px;background:var(--w-ink-900);display:flex;align-items:center;justify-content:center">
+          <span class="w-wordmark" style="font-size:0.95rem;color:var(--w-paper-50)">WERKS<span class="w-wordmark__stop">.</span></span>
+        </div>
+        <div style="width:2.75rem;height:2.75rem;border-radius:10px;background:var(--w-ink-900);display:flex;align-items:center;justify-content:center">
+          <span class="w-dot w-dot--lg"></span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="pv-h3">The Dot</h3>
+    <p class="pv-note">The full stop, reused as the product's only live indicator. It means one thing: Werks is on it. It appears in five places and nowhere else. It never pulses.</p>
+    <div class="pv-panel pv-inline" style="gap:var(--w-space-8)">
+      <span class="pv-inline"><span class="w-dot w-dot--sm"></span><span class="w-meta">6px inline</span></span>
+      <span class="pv-inline"><span class="w-dot"></span><span class="w-meta">8px row</span></span>
+      <span class="pv-inline"><span class="w-dot w-dot--lg"></span><span class="w-meta">12px voice</span></span>
+      <span class="w-meta">Never a count. Never a red badge. Never pulsing.</span>
+    </div>
+  </section>
+
+  <!-- ===================================================== COLOUR -->
+  <section class="pv-sec" id="colour">
+    <h2>Colour</h2>
+    <p class="pv-lede">Black and paper, one signal colour, four status colours used sparingly. Primary actions are black, not coloured: it reads in sunlight, it looks like print, and it leaves colour free to mean something.</p>
+
+    <h3 class="pv-h3">Paper and Ink</h3>
+    <div class="pv-grid pv-grid--4">
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#FBFAF8"></div><div class="pv-swatch__meta"><div class="pv-swatch__name">paper-50</div><div class="pv-swatch__hex">#FBFAF8 · canvas</div></div></div>
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#F5F3EF"></div><div class="pv-swatch__meta"><div class="pv-swatch__name">paper-100</div><div class="pv-swatch__hex">#F5F3EF · sunken</div></div></div>
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#EBE8E2"></div><div class="pv-swatch__meta"><div class="pv-swatch__name">paper-200</div><div class="pv-swatch__hex">#EBE8E2 · waiting</div></div></div>
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#DCD8D0"></div><div class="pv-swatch__meta"><div class="pv-swatch__name">paper-300</div><div class="pv-swatch__hex">#DCD8D0 · border</div></div></div>
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#8C877F"></div><div class="pv-swatch__meta"><div class="pv-swatch__name">ink-450</div><div class="pv-swatch__hex">#8C877F · 3.42:1</div></div></div>
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#5C5851"></div><div class="pv-swatch__meta"><div class="pv-swatch__name">ink-600</div><div class="pv-swatch__hex">#5C5851 · 6.78:1</div></div></div>
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#1A1917"></div><div class="pv-swatch__meta"><div class="pv-swatch__name">ink-900</div><div class="pv-swatch__hex">#1A1917 · 16.84:1</div></div></div>
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#0F0E0D"></div><div class="pv-swatch__meta"><div class="pv-swatch__name">ink-950</div><div class="pv-swatch__hex">#0F0E0D · dark bg</div></div></div>
+    </div>
+
+    <h3 class="pv-h3">Volt, the signal</h3>
+    <p class="pv-note">Under 2% of any screen. Only on Ink. Never as text on paper: <code style="font-family:var(--w-font-mono);font-size:0.8em">volt-500</code> on paper is 1.14:1, which is invisible.</p>
+    <div class="pv-grid pv-grid--4">
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#C3FF33"></div><div class="pv-swatch__meta"><div class="pv-swatch__name">volt-500</div><div class="pv-swatch__hex">#C3FF33 · The Dot</div></div></div>
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#1A1917;display:flex;align-items:center;justify-content:center"><span class="w-dot w-dot--lg"></span></div><div class="pv-swatch__meta"><div class="pv-swatch__name">on ink-900</div><div class="pv-swatch__hex">14.78:1 · correct</div></div></div>
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#FBFAF8;display:flex;align-items:center;justify-content:center;color:#C3FF33;font-weight:600">Invisible</div><div class="pv-swatch__meta"><div class="pv-swatch__name">on paper-50</div><div class="pv-swatch__hex">1.14:1 · forbidden</div></div></div>
+      <div class="pv-swatch"><div class="pv-swatch__chip" style="background:#3F5600"></div><div class="pv-swatch__meta"><div class="pv-swatch__name">volt-900</div><div class="pv-swatch__hex">#3F5600 · 7.92:1 text</div></div></div>
+    </div>
+
+    <h3 class="pv-h3">Status</h3>
+    <p class="pv-note">Waiting for you is the normal state of this product, so it is neutral ink, not amber. Amber is earned by time passing.</p>
+    <div class="pv-panel pv-inline">
+      <span class="w-chip w-chip--waiting">Waiting for you</span>
+      <span class="w-chip w-chip--positive">Paid 12 Aug</span>
+      <span class="w-chip w-chip--attention">45 days</span>
+      <span class="w-chip w-chip--critical">Stopped</span>
+      <span class="w-chip w-chip--scheduled">Tue 08:00</span>
+      <span class="w-chip w-chip--quiet">Sent 9:26</span>
+    </div>
+
+    <div class="pv-do-dont" style="margin-top:var(--w-space-6)">
+      <div class="pv-do"><div class="pv-tag">Do</div><p class="w-body">Neutral chip for the queue. Colour reserved for things that are actually exceptional.</p></div>
+      <div class="pv-dont"><div class="pv-tag">Don't</div><p class="w-body">Amber on the default state. It teaches the owner that colour means nothing.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================================================== TYPE -->
+  <section class="pv-sec" id="type">
+    <h2>Typography</h2>
+    <p class="pv-lede">Archivo for display, Inter for everything read, Newsreader for the Daily Brief only, JetBrains Mono for serials and references. Type carries the whole hierarchy, because colour is not allowed to.</p>
+
+    <div class="pv-spec"><span class="pv-spec__tag">5xl · 64 · Archivo 800</span><span style="font-family:var(--w-font-display);font-weight:800;font-size:4rem;letter-spacing:-0.03em;line-height:1">WERKS<span style="color:var(--w-signal)">.</span></span></div>
+    <div class="pv-spec"><span class="pv-spec__tag">3xl · 38 · money</span><span class="w-money">£6,400</span></div>
+    <div class="pv-spec"><span class="pv-spec__tag">2xl · 30 · Newsreader</span><span class="w-brief">£2,400 is still at 45 days.</span></div>
+    <div class="pv-spec"><span class="pv-spec__tag">xl · 24 · screen title</span><span class="w-screen-title">Waiting for you</span></div>
+    <div class="pv-spec"><span class="pv-spec__tag">lg · 20 · card title</span><span class="w-card-title">Reply to Sarah Whitfield</span></div>
+    <div class="pv-spec"><span class="pv-spec__tag">md · 17 · reading</span><span class="w-body">Hi Sarah, this is Whitfield Heating. Steve can come out tomorrow morning between 8 and 10.</span></div>
+    <div class="pv-spec"><span class="pv-spec__tag">base · 16 · UI</span><span class="w-ui">Send it</span></div>
+    <div class="pv-spec"><span class="pv-spec__tag">sm · 14 · label</span><span class="w-label">Postcode</span></div>
+    <div class="pv-spec"><span class="pv-spec__tag">xs · 12 · meta</span><span class="w-meta">Sent 9:26 · Delivered</span></div>
+    <div class="pv-spec"><span class="pv-spec__tag">2xs · 11 · overline</span><span class="w-overline">Outstanding</span></div>
+    <div class="pv-spec"><span class="pv-spec__tag">mono · serial</span><span class="w-ref">7731600123</span></div>
+
+    <h3 class="pv-h3">The Daily Brief</h3>
+    <p class="pv-note">The one place the system uses the serif. It is where Werks speaks as a business partner rather than as a tool.</p>
+    <div class="pv-panel">
+      <div class="w-overline">Wednesday 12 August</div>
+      <p class="w-brief" style="margin:12px 0 8px">Two quotes went out. £2,400 is still sitting at 45 days.</p>
+      <p class="w-body w-secondary">Four things are waiting for you. The oldest has been there since Monday.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== SPACE -->
+  <section class="pv-sec" id="space">
+    <h2>Space and targets</h2>
+    <p class="pv-lede">4px base. 48px is the floor for anything tappable, 56px is the default, 64px for the primary action. Set by gloves, not by convention.</p>
+    <div class="pv-grid pv-grid--2">
+      <div class="pv-panel">
+        <div class="w-overline" style="margin-bottom:12px">Scale</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:12px"><span class="pv-spec__tag" style="width:5rem">space-1 · 4</span><span style="height:12px;width:4px;background:var(--w-text-primary)"></span></div>
+          <div style="display:flex;align-items:center;gap:12px"><span class="pv-spec__tag" style="width:5rem">space-2 · 8</span><span style="height:12px;width:8px;background:var(--w-text-primary)"></span></div>
+          <div style="display:flex;align-items:center;gap:12px"><span class="pv-spec__tag" style="width:5rem">space-4 · 16</span><span style="height:12px;width:16px;background:var(--w-text-primary)"></span></div>
+          <div style="display:flex;align-items:center;gap:12px"><span class="pv-spec__tag" style="width:5rem">space-6 · 24</span><span style="height:12px;width:24px;background:var(--w-text-primary)"></span></div>
+          <div style="display:flex;align-items:center;gap:12px"><span class="pv-spec__tag" style="width:5rem">space-8 · 32</span><span style="height:12px;width:32px;background:var(--w-text-primary)"></span></div>
+          <div style="display:flex;align-items:center;gap:12px"><span class="pv-spec__tag" style="width:5rem">space-12 · 48</span><span style="height:12px;width:48px;background:var(--w-text-primary)"></span></div>
+        </div>
+      </div>
+      <div class="pv-panel">
+        <div class="w-overline" style="margin-bottom:12px">Touch targets</div>
+        <div style="display:flex;align-items:flex-end;gap:8px">
+          <div class="pv-target" style="width:40px;height:40px">40</div>
+          <div class="pv-target" style="width:48px;height:48px">48</div>
+          <div class="pv-target" style="width:56px;height:56px">56</div>
+          <div class="pv-target" style="width:64px;height:64px">64</div>
+        </div>
+        <p class="pv-note" style="margin-top:16px">40 is inline only and never a primary action. 48 is the absolute floor. 64 is the approve button.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== ICONS -->
+  <section class="pv-sec" id="icons">
+    <h2>Icons</h2>
+    <p class="pv-lede">Lucide at 1.75px stroke, plus a small domain set. Every icon carries a text label, except the microphone and back. There is no sparkle, no wand, and no robot.</p>
+    <div class="pv-panel pv-inline" style="gap:var(--w-space-6)">
+      <span class="pv-inline"><svg class="w-icon"><use href="#i-clock"/></svg><span class="w-meta">Waiting</span></span>
+      <span class="pv-inline"><svg class="w-icon"><use href="#i-check"/></svg><span class="w-meta">Sent</span></span>
+      <span class="pv-inline"><svg class="w-icon"><use href="#i-check-circle"/></svg><span class="w-meta">Paid</span></span>
+      <span class="pv-inline"><svg class="w-icon"><use href="#i-hand"/></svg><span class="w-meta">Stopped</span></span>
+      <span class="pv-inline"><svg class="w-icon"><use href="#i-mic"/></svg><span class="w-meta">Talk</span></span>
+      <span class="pv-inline"><svg class="w-icon"><use href="#i-cloud-off"/></svg><span class="w-meta">Offline</span></span>
+      <span class="pv-inline"><svg class="w-icon"><use href="#i-boiler"/></svg><span class="w-meta">Boiler</span></span>
+      <span class="pv-inline"><svg class="w-icon"><use href="#i-flame"/></svg><span class="w-meta">Gas</span></span>
+      <span class="pv-inline"><svg class="w-icon"><use href="#i-home"/></svg><span class="w-meta">Property</span></span>
+      <span class="pv-inline"><svg class="w-icon"><use href="#i-arrow-ur"/></svg><span class="w-meta">Escalated</span></span>
+    </div>
+  </section>
+
+  <!-- ===================================================== BUTTONS -->
+  <section class="pv-sec" id="buttons">
+    <h2>Buttons</h2>
+    <p class="pv-lede">Four variants. One primary per screen. Labels say what will happen: Send it, not Submit.</p>
+    <div class="pv-grid pv-grid--2">
+      <div class="pv-panel">
+        <div class="w-overline" style="margin-bottom:16px">Variants</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <button class="w-btn w-btn--primary w-btn--lg w-btn--block">Send it</button>
+          <button class="w-btn w-btn--secondary w-btn--lg w-btn--block">Edit first</button>
+          <button class="w-btn w-btn--quiet w-btn--lg w-btn--block">Not now</button>
+          <button class="w-btn w-btn--destructive w-btn--lg w-btn--block">Delete this draft</button>
+        </div>
+      </div>
+      <div class="pv-panel">
+        <div class="w-overline" style="margin-bottom:16px">Sizes and states</div>
+        <div class="pv-inline" style="margin-bottom:16px">
+          <button class="w-btn w-btn--secondary w-btn--sm">40 · sm</button>
+          <button class="w-btn w-btn--secondary w-btn--md">48 · md</button>
+          <button class="w-btn w-btn--secondary w-btn--lg">56 · lg</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <button class="w-btn w-btn--primary w-btn--xl w-btn--block">
+            <svg class="w-icon w-icon--md" aria-hidden="true"><use href="#i-check"/></svg>Send it · 64px
+          </button>
+          <button class="w-btn w-btn--primary w-btn--lg w-btn--block" aria-busy="true" disabled>
+            <span class="w-spinner" aria-hidden="true"></span>Sending
+          </button>
+          <button class="w-btn w-btn--primary w-btn--lg w-btn--block" disabled>Disabled</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== INPUTS -->
+  <section class="pv-sec" id="inputs">
+    <h2>Inputs</h2>
+    <p class="pv-lede">Labels above, always. 17px text so iOS does not zoom. Errors on blur, never on keystroke. The mic is offered anywhere there is real typing to do.</p>
+    <div class="pv-grid pv-grid--2">
+      <div class="pv-panel" style="display:flex;flex-direction:column;gap:var(--w-space-5)">
+        <div class="w-field">
+          <label class="w-field__label" for="pc">Postcode</label>
+          <input class="w-input w-input--lg" id="pc" value="PE7 3RB">
+          <p class="w-field__hint">Where the job is, not where the customer lives.</p>
+        </div>
+        <div class="w-field">
+          <label class="w-field__label" for="amt">Amount</label>
+          <div class="w-input-group">
+            <span class="w-input-group__affix" aria-hidden="true">£</span>
+            <input class="w-input w-input--lg w-tabular" id="amt" inputmode="decimal" value="340.00">
+          </div>
+        </div>
+        <div class="w-field w-field--error">
+          <label class="w-field__label" for="ph">Phone</label>
+          <input class="w-input w-input--lg" id="ph" value="0770 90012" aria-invalid="true" aria-describedby="ph-e">
+          <p class="w-field__error" id="ph-e">
+            <svg class="w-icon w-icon--sm" aria-hidden="true"><use href="#i-alert"/></svg>
+            That number is too short. Nothing has been sent.
+          </p>
+        </div>
+      </div>
+      <div class="pv-panel">
+        <div class="w-field">
+          <label class="w-field__label" for="note">Job note</label>
+          <textarea class="w-input w-input--lg" id="note" rows="4">Replaced the diverter valve. Pump is noisy, quoted £340 for next visit. Told her the warranty runs to 2029.</textarea>
+        </div>
+        <div class="w-btn-row" style="margin-top:12px">
+          <button class="w-btn w-btn--secondary w-btn--md"><svg class="w-icon w-icon--md" aria-hidden="true"><use href="#i-mic"/></svg>Hold to talk</button>
+        </div>
+        <div class="w-overline" style="margin:24px 0 8px">Choices are rows, never dropdowns</div>
+        <label class="w-choice-row"><input type="radio" name="jt" checked><span class="w-ui">Service</span></label>
+        <label class="w-choice-row"><input type="radio" name="jt"><span class="w-ui">Repair</span></label>
+        <label class="w-choice-row"><input type="radio" name="jt"><span class="w-ui">Install</span></label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== STATUS -->
+  <section class="pv-sec" id="status">
+    <h2>Status and feedback</h2>
+    <p class="pv-lede">Errors are never toasts. Empty is the goal state, so it says so and stops. The audit trail quotes every customer-facing string in full.</p>
+    <div class="pv-grid pv-grid--2">
+      <div style="display:flex;flex-direction:column;gap:var(--w-space-4)">
+        <div class="w-banner">
+          <svg class="w-icon" aria-hidden="true"><use href="#i-cloud-off"/></svg>
+          <div><p class="w-banner__title">No signal</p><p class="w-banner__body">Saved on this phone. It'll send when you're back.</p></div>
+        </div>
+        <div class="w-banner w-banner--critical">
+          <svg class="w-icon" aria-hidden="true"><use href="#i-hand"/></svg>
+          <div>
+            <p class="w-banner__title">Stopped. Rachel Oyelaran mentioned a smell of gas.</p>
+            <p class="w-banner__body">Werks sent the emergency number and nothing else. Nothing further will go out on this thread.</p>
+            <button class="w-btn w-btn--destructive w-btn--md" style="margin-top:12px">Call Rachel · 07700 900123</button>
+          </div>
+        </div>
+        <div class="w-toast"><span>Sent to Sarah Whitfield.</span><button class="w-toast__action">Undo</button></div>
+        <div class="pv-panel">
+          <div class="w-empty">
+            <svg class="w-icon w-icon--xl" aria-hidden="true"><use href="#i-check"/></svg>
+            <p class="w-empty__title">Nothing waiting.</p>
+            <p class="w-empty__body">Werks will bring you anything that needs a decision.</p>
+          </div>
+        </div>
+      </div>
+      <div class="pv-panel">
+        <div class="w-overline" style="margin-bottom:12px">Audit trail</div>
+        <ul class="w-audit">
+          <li class="w-audit__item"><span class="w-audit__time">09:14</span><span class="w-audit__what">Missed call from 07700 900123</span></li>
+          <li class="w-audit__item"><span class="w-audit__time">09:14</span><span><span class="w-audit__what">Text sent</span><p class="w-audit__quote">"Hi, this is Whitfield Heating. Sorry we missed you. What's the problem and what's the postcode? We'll come straight back to you."</p></span></li>
+          <li class="w-audit__item"><span class="w-audit__time">09:21</span><span><span class="w-audit__what">Reply received</span><p class="w-audit__quote">"No heat since last night, PE7 3RB"</p></span></li>
+          <li class="w-audit__item"><span class="w-audit__time">09:22</span><span class="w-audit__what">Werks drafted a reply</span></li>
+          <li class="w-audit__item"><span class="w-audit__time">09:26</span><span class="w-audit__what">Steve approved</span></li>
+          <li class="w-audit__item"><span class="w-audit__time">09:26</span><span class="w-audit__what">Text sent</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== CARDS -->
+  <section class="pv-sec" id="cards">
+    <h2>Cards</h2>
+    <p class="pv-lede">The approval card is the most important component in the product. The draft is shown in full, at reading size, never truncated. Editing costs the same as approving, or the edit rate stops measuring trust and starts measuring friction.</p>
+
+    <div class="pv-grid pv-grid--2">
+      <div class="w-card w-card--reading">
+        <div class="w-card__head">
+          <span class="w-chip w-chip--waiting">Waiting for you</span>
+          <span class="w-meta">9:26</span>
+        </div>
+        <h3 class="w-card-title">Reply to Sarah Whitfield</h3>
+        <p class="w-card__context">14 Elm Road, PE7 3RB · No heat since Monday</p>
+        <div class="w-draft">Hi Sarah, this is Whitfield Heating. Steve can come out tomorrow morning between 8 and 10. Does that work?</div>
+        <p class="w-note"><svg class="w-icon w-icon--sm" aria-hidden="true"><use href="#i-alert"/></svg>
+          Werks used the 8 to 10 slot because your diary is clear. It has not been held.</p>
+        <div class="w-card__actions">
+          <button class="w-btn w-btn--primary w-btn--xl w-btn--block">Send it</button>
+          <div class="w-btn-row">
+            <button class="w-btn w-btn--secondary w-btn--lg">Edit first</button>
+            <button class="w-btn w-btn--quiet w-btn--lg">Don't send</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:var(--w-space-4)">
+        <div class="w-card">
+          <div class="w-overline">Outstanding</div>
+          <p class="w-money" style="margin-top:8px">£6,400</p>
+          <p class="w-money-sub">Across 7 invoices. £2,400 is over 45 days.</p>
+        </div>
+
+        <div class="w-card">
+          <div class="w-card__head">
+            <span class="w-meta">Tue 12 Aug · 08:00–10:00</span>
+            <span class="w-chip w-chip--scheduled">Booked</span>
+          </div>
+          <h3 class="w-card-title">Sarah Whitfield</h3>
+          <p class="w-card__context">14 Elm Road, PE7 3RB</p>
+          <p class="w-body" style="margin-top:12px">No heat. Worcester 8000, fitted Mar 2019.</p>
+          <div class="w-btn-row" style="margin-top:16px">
+            <button class="w-btn w-btn--secondary w-btn--md">Call Sarah</button>
+            <button class="w-btn w-btn--secondary w-btn--md">Directions</button>
+          </div>
+        </div>
+
+        <div class="w-card">
+          <div class="w-card__head">
+            <h3 class="w-card-title">14 Elm Road, PE7 3RB</h3>
+            <span class="w-chip w-chip--quiet">Landlord</span>
+          </div>
+          <p class="w-body" style="margin-top:8px">Worcester Bosch 8000 Life</p>
+          <p class="w-card__context">Fitted Mar 2019 · Warranty to 2029</p>
+          <p class="w-ref" style="display:block;margin-top:4px">7731600123</p>
+          <p class="w-body" style="margin-top:12px">Last service 4 Feb. Next due Feb.<br>Key is with the tenant, Mrs Iqbal. Back gate code 1990.</p>
+          <div class="w-row" style="margin-top:12px;border-bottom:0;padding-bottom:0">
+            <span class="w-row__main w-meta">3 visits</span>
+            <span class="w-row__end">See the history <svg class="w-icon w-icon--sm" aria-hidden="true"><use href="#i-chevron"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== VOICE -->
+  <section class="pv-sec" id="voice">
+    <h2>Voice input</h2>
+    <p class="pv-lede">Owner-facing capture only. There is no live customer voice in Horizon 1 (<code style="font-family:var(--w-font-mono);font-size:0.8em">01_vision</code> D6). Hold to talk, release to finish. Voice produces a draft, never an action, and the transcript is always shown and always editable.</p>
+
+    <div class="pv-grid pv-grid--2">
+      <div style="display:flex;flex-direction:column;gap:var(--w-space-4)">
+        <div class="pv-panel" style="display:flex;align-items:center;gap:var(--w-space-4)">
+          <button class="w-mic" aria-label="Hold to record a note"><svg class="w-icon w-icon--xl" aria-hidden="true"><use href="#i-mic"/></svg></button>
+          <div><p class="w-ui" style="font-weight:600">Idle</p><p class="w-meta">Hold to talk. The Dot does not pulse.</p></div>
+        </div>
+        <div class="w-voice-bar">
+          <div class="w-voice-bar__meter" aria-hidden="true">
+            <span class="w-listening-bar"></span><span class="w-listening-bar"></span><span class="w-listening-bar"></span>
+          </div>
+          <span class="w-voice-bar__state">Listening</span>
+          <span class="w-voice-bar__timer w-tabular">0:07</span>
+        </div>
+        <div class="w-voice-bar">
+          <span class="w-spinner" aria-hidden="true" style="color:var(--w-signal)"></span>
+          <span class="w-voice-bar__state">Working it out</span>
+          <button class="w-btn w-btn--quiet w-btn--sm" style="color:var(--w-text-inverse)">Cancel</button>
+        </div>
+        <div class="w-banner w-banner--attention">
+          <svg class="w-icon" aria-hidden="true"><use href="#i-alert"/></svg>
+          <div><p class="w-banner__title">Can't hear you</p><p class="w-banner__body">Move somewhere quieter, or type it instead.</p></div>
+        </div>
+      </div>
+
+      <div class="w-card w-card--reading">
+        <h3 class="w-card-title">Is this right?</h3>
+        <div class="w-field" style="margin-top:16px">
+          <textarea class="w-input w-input--lg" rows="4">Boiler at 14 Elm Road, replaced the diverter valve, needs a new pump next visit. Told her about £340.</textarea>
+        </div>
+        <p class="w-note">The transcript is a field, not a bubble. Speech gets postcodes and model numbers wrong, and fixing one character should not mean re-recording thirty seconds.</p>
+        <div class="w-card__actions">
+          <button class="w-btn w-btn--primary w-btn--xl w-btn--block">Use this</button>
+          <button class="w-btn w-btn--secondary w-btn--lg w-btn--block">Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== NAV -->
+  <section class="pv-sec" id="nav">
+    <h2>Navigation</h2>
+    <p class="pv-lede">Four tabs, flat, all labelled. Two levels deep, then sheets. There is no Chat tab: Werks is not a thing you go and talk to, it brings you the work.</p>
+    <div class="pv-grid pv-grid--2">
+      <div class="pv-panel" style="padding:0;overflow:hidden">
+        <div class="w-appbar w-appbar--scrolled"><span class="w-appbar__title">Waiting for you</span>
+          <button class="w-btn w-btn--quiet w-btn--sm" aria-label="More">···</button></div>
+        <div style="padding:var(--w-space-4)">
+          <div class="w-segmented" role="tablist">
+            <button class="w-segmented__item" role="tab" aria-selected="true">Waiting</button>
+            <button class="w-segmented__item" role="tab" aria-selected="false">Sent</button>
+            <button class="w-segmented__item" role="tab" aria-selected="false">Stopped</button>
+          </div>
+        </div>
+        <nav class="w-tabbar" role="tablist">
+          <button class="w-tab" role="tab" aria-selected="false"><svg class="w-icon"><use href="#i-sun"/></svg><span class="w-tab__label">Today</span></button>
+          <button class="w-tab" role="tab" aria-selected="true"><svg class="w-icon"><use href="#i-clock"/></svg><span class="w-tab__label">Waiting <span class="w-dot w-dot--sm"></span></span></button>
+          <button class="w-tab" role="tab" aria-selected="false"><span style="font-family:var(--w-font-display);font-weight:700;font-size:1.35rem;line-height:1.5rem">£</span><span class="w-tab__label">Money</span></button>
+          <button class="w-tab" role="tab" aria-selected="false"><svg class="w-icon"><use href="#i-home"/></svg><span class="w-tab__label">Memory</span></button>
+        </nav>
+      </div>
+      <div class="pv-panel">
+        <div class="w-overline" style="margin-bottom:12px">List rows</div>
+        <div class="w-row"><span class="w-dot"></span><span class="w-row__main"><span class="w-row__title">Sarah Whitfield</span><br><span class="w-row__sub">No heat, 14 Elm Road</span></span><span class="w-row__end">9:26 <svg class="w-icon w-icon--sm"><use href="#i-chevron"/></svg></span></div>
+        <div class="w-row"><span class="w-dot"></span><span class="w-row__main"><span class="w-row__title">Marcus Dixon</span><br><span class="w-row__sub">Quote, boiler swap</span></span><span class="w-row__end">Mon <svg class="w-icon w-icon--sm"><use href="#i-chevron"/></svg></span></div>
+        <div class="w-row"><span style="width:8px"></span><span class="w-row__main"><span class="w-row__title">Priya Raman</span><br><span class="w-row__sub">Invoice, £480</span></span><span class="w-row__end"><span class="w-chip w-chip--positive">Paid</span></span></div>
+        <div class="w-row"><span style="width:8px"></span><span class="w-row__main"><span class="w-row__title">Cheyne Lettings</span><br><span class="w-row__sub">Invoice, £2,400</span></span><span class="w-row__end"><span class="w-chip w-chip--attention">45 days</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== SHEETS -->
+  <section class="pv-sec" id="sheets">
+    <h2>Sheets</h2>
+    <p class="pv-lede">Sheets instead of modals: they arrive where the thumb already is, and they can be pushed back down one-handed. The confirm sheet shows the message again, in full, with the number it is going to.</p>
+    <div class="pv-grid pv-grid--2">
+      <div style="border:1px solid var(--w-border-subtle);border-radius:var(--w-radius-lg);overflow:hidden;background:var(--w-bg-sunken);padding-top:var(--w-space-10)">
+        <div class="w-sheet">
+          <div class="w-sheet__handle"></div>
+          <h3 class="w-sheet__title">Send this to Sarah Whitfield?</h3>
+          <p class="w-sheet__sub">07700 900123</p>
+          <div class="w-draft">Hi Sarah, this is Whitfield Heating. Steve can come out tomorrow morning between 8 and 10. Does that work?</div>
+          <div class="w-sheet__actions">
+            <button class="w-btn w-btn--primary w-btn--xl w-btn--block">Send it</button>
+            <button class="w-btn w-btn--secondary w-btn--lg w-btn--block">Not now</button>
+          </div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--w-border-subtle);border-radius:var(--w-radius-lg);overflow:hidden;background:var(--w-bg-sunken);padding-top:var(--w-space-10)">
+        <div class="w-sheet">
+          <div class="w-sheet__handle"></div>
+          <h3 class="w-sheet__title">Sarah Whitfield</h3>
+          <div style="margin-top:var(--w-space-4)">
+            <button class="w-action-row">Call · 07700 900123</button>
+            <button class="w-action-row">See the conversation</button>
+            <button class="w-action-row">Open the property record</button>
+            <button class="w-action-row w-action-row--destructive" style="margin-top:var(--w-space-4)">Delete this draft</button>
+          </div>
+          <div class="w-sheet__actions">
+            <button class="w-btn w-btn--secondary w-btn--lg w-btn--block">Not now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== SCREENS -->
+  <section class="pv-sec" id="screens">
+    <h2>Screens</h2>
+    <p class="pv-lede">The system assembled. One column, one decision, actions in the bottom third, 120px of clearance so the mic dock never covers the last card.</p>
+
+    <div class="pv-phones">
+
+      <!-- TODAY -->
+      <div class="pv-phone">
+        <div class="w-appbar"><span class="w-appbar__title">Today</span></div>
+        <div class="pv-phone__scroll">
+          <div class="w-overline">Wednesday 12 August</div>
+          <p class="w-brief" style="margin:12px 0 8px">Two quotes went out. £2,400 is still sitting at 45 days.</p>
+          <p class="w-body w-secondary">Four things are waiting for you. The oldest has been there since Monday.</p>
+
+          <div class="w-section">
+            <div class="w-section__head"><span class="w-overline">Booked today</span></div>
+            <div class="w-card">
+              <div class="w-card__head"><span class="w-meta">08:00–10:00</span><span class="w-chip w-chip--scheduled">Booked</span></div>
+              <h3 class="w-card-title">Sarah Whitfield</h3>
+              <p class="w-card__context">14 Elm Road, PE7 3RB</p>
+              <p class="w-body" style="margin-top:12px">No heat. Worcester 8000, fitted Mar 2019.</p>
+            </div>
+          </div>
+
+          <div class="w-section">
+            <div class="w-section__head"><span class="w-overline">Money</span></div>
+            <div class="w-card">
+              <p class="w-money">£6,400</p>
+              <p class="w-money-sub">Outstanding across 7 invoices.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pv-phone__dock"><button class="w-mic" aria-label="Hold to record a note"><svg class="w-icon w-icon--xl" aria-hidden="true"><use href="#i-mic"/></svg></button></div>
+        <nav class="w-tabbar">
+          <button class="w-tab" aria-selected="true"><svg class="w-icon"><use href="#i-sun"/></svg><span class="w-tab__label">Today</span></button>
+          <button class="w-tab" aria-selected="false"><svg class="w-icon"><use href="#i-clock"/></svg><span class="w-tab__label">Waiting <span class="w-dot w-dot--sm"></span></span></button>
+          <button class="w-tab" aria-selected="false"><span style="font-family:var(--w-font-display);font-weight:700;font-size:1.35rem;line-height:1.5rem">£</span><span class="w-tab__label">Money</span></button>
+          <button class="w-tab" aria-selected="false"><svg class="w-icon"><use href="#i-home"/></svg><span class="w-tab__label">Memory</span></button>
+        </nav>
+      </div>
+
+      <!-- WAITING -->
+      <div class="pv-phone">
+        <div class="w-appbar"><span class="w-appbar__title">Waiting for you</span></div>
+        <div class="pv-phone__scroll">
+          <p class="w-meta" style="margin:0 0 16px">4 waiting. Oldest since Monday.</p>
+          <div class="w-card w-card--reading">
+            <div class="w-card__head"><span class="w-chip w-chip--waiting">Waiting for you</span><span class="w-meta">9:26</span></div>
+            <h3 class="w-card-title">Reply to Sarah Whitfield</h3>
+            <p class="w-card__context">14 Elm Road · No heat since Monday</p>
+            <div class="w-draft">Hi Sarah, this is Whitfield Heating. Steve can come out tomorrow morning between 8 and 10. Does that work?</div>
+            <div class="w-card__actions">
+              <button class="w-btn w-btn--primary w-btn--xl w-btn--block">Send it</button>
+              <div class="w-btn-row">
+                <button class="w-btn w-btn--secondary w-btn--lg">Edit first</button>
+                <button class="w-btn w-btn--quiet w-btn--lg">Don't send</button>
+              </div>
+            </div>
+          </div>
+          <div class="w-card" style="margin-top:16px">
+            <div class="w-card__head"><span class="w-chip w-chip--waiting">Waiting for you</span><span class="w-meta">Mon</span></div>
+            <h3 class="w-card-title">Chase Cheyne Lettings</h3>
+            <p class="w-card__context">£2,400 · 45 days · 2 chases sent, no reply</p>
+          </div>
+        </div>
+        <div class="pv-phone__dock"><button class="w-mic" aria-label="Hold to record a note"><svg class="w-icon w-icon--xl" aria-hidden="true"><use href="#i-mic"/></svg></button></div>
+        <nav class="w-tabbar">
+          <button class="w-tab" aria-selected="false"><svg class="w-icon"><use href="#i-sun"/></svg><span class="w-tab__label">Today</span></button>
+          <button class="w-tab" aria-selected="true"><svg class="w-icon"><use href="#i-clock"/></svg><span class="w-tab__label">Waiting <span class="w-dot w-dot--sm"></span></span></button>
+          <button class="w-tab" aria-selected="false"><span style="font-family:var(--w-font-display);font-weight:700;font-size:1.35rem;line-height:1.5rem">£</span><span class="w-tab__label">Money</span></button>
+          <button class="w-tab" aria-selected="false"><svg class="w-icon"><use href="#i-home"/></svg><span class="w-tab__label">Memory</span></button>
+        </nav>
+      </div>
+
+      <!-- VOICE -->
+      <div class="pv-phone">
+        <div class="w-appbar"><span class="w-appbar__title">14 Elm Road</span></div>
+        <div class="pv-phone__scroll">
+          <div class="w-card">
+            <div class="w-card__head"><h3 class="w-card-title">Worcester 8000 Life</h3><span class="w-chip w-chip--quiet">Landlord</span></div>
+            <p class="w-card__context">Fitted Mar 2019 · Warranty to 2029</p>
+            <p class="w-ref" style="display:block;margin-top:4px">7731600123</p>
+            <p class="w-body" style="margin-top:12px">Key is with the tenant, Mrs Iqbal. Back gate code 1990.</p>
+          </div>
+          <div class="w-section">
+            <div class="w-section__head"><span class="w-overline">History</span></div>
+            <div class="w-row"><span class="w-row__main"><span class="w-row__title">4 Feb 2026</span><br><span class="w-row__sub">Service. Diverter valve replaced.</span></span></div>
+            <div class="w-row"><span class="w-row__main"><span class="w-row__title">11 Feb 2025</span><br><span class="w-row__sub">Service. Pump noisy, deferred.</span></span></div>
+          </div>
+          <div style="margin-top:24px">
+            <div class="w-voice-bar">
+              <div class="w-voice-bar__meter" aria-hidden="true">
+                <span class="w-listening-bar"></span><span class="w-listening-bar"></span><span class="w-listening-bar"></span>
+              </div>
+              <span class="w-voice-bar__state">Listening</span>
+              <span class="w-voice-bar__timer w-tabular">0:07</span>
+            </div>
+            <p class="w-meta" style="text-align:center;margin-top:8px">Release to finish. Slide up to cancel.</p>
+          </div>
+        </div>
+        <nav class="w-tabbar">
+          <button class="w-tab" aria-selected="false"><svg class="w-icon"><use href="#i-sun"/></svg><span class="w-tab__label">Today</span></button>
+          <button class="w-tab" aria-selected="false"><svg class="w-icon"><use href="#i-clock"/></svg><span class="w-tab__label">Waiting <span class="w-dot w-dot--sm"></span></span></button>
+          <button class="w-tab" aria-selected="false"><span style="font-family:var(--w-font-display);font-weight:700;font-size:1.35rem;line-height:1.5rem">£</span><span class="w-tab__label">Money</span></button>
+          <button class="w-tab" aria-selected="true"><svg class="w-icon"><use href="#i-home"/></svg><span class="w-tab__label">Memory</span></button>
+        </nav>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="pv-sec">
+    <h2>Contrast</h2>
+    <p class="pv-lede">Every permitted pair is verified in CI by <code style="font-family:var(--w-font-mono);font-size:0.85em">node tokens/verify-contrast.mjs</code>. 38 pairs, zero failures. Body text is 16.84:1 because this is read outdoors.</p>
+    <table class="pv-table">
+      <tr><th>Pair</th><th>Ratio</th><th>Use</th></tr>
+      <tr><td>ink-900 on paper-50</td><td>16.84:1</td><td>Primary text</td></tr>
+      <tr><td>ink-600 on paper-50</td><td>6.78:1</td><td>Secondary text</td></tr>
+      <tr><td>ink-450 on paper-50</td><td>3.42:1</td><td>Control borders, WCAG 1.4.11</td></tr>
+      <tr><td>volt-500 on ink-900</td><td>14.78:1</td><td>The Dot</td></tr>
+      <tr><td>volt-500 on paper-50</td><td>1.14:1</td><td><strong>Forbidden.</strong> Never volt on paper.</td></tr>
+      <tr><td>amber-800 on amber-100</td><td>7.41:1</td><td>Overdue chip</td></tr>
+      <tr><td>dk-text on dk-bg</td><td>17.40:1</td><td>Primary text, dark</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<script>
+  const btn = document.getElementById('theme-toggle')
+  btn.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
+    document.documentElement.dataset.theme = next
+    btn.textContent = next === 'dark' ? 'Light' : 'Dark'
+  })
+</script>
+</body>
+</html>

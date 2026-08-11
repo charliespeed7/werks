@@ -1,0 +1,125 @@
+/* =============================================================================
+   Werks — Tailwind CSS v4 theme.
+   Use this instead of tailwind.config.js on v4.
+
+     @import "tailwindcss";
+     @import "./tokens.css";
+     @import "./tailwind-v4.css";
+
+   Colours point at the semantic custom properties from tokens.css, so
+   `bg-surface` follows the theme without a variant.
+   ============================================================================= */
+
+@theme {
+  /* Reset Tailwind's defaults. An off-token colour should not compile. */
+  --color-*: initial;
+
+  /* --- semantic --- */
+  --color-canvas:  var(--w-bg-canvas);
+  --color-surface: var(--w-bg-surface);
+  --color-sunken:  var(--w-bg-sunken);
+  --color-raised:  var(--w-bg-raised);
+  --color-inverse: var(--w-bg-inverse);
+  --color-scrim:   var(--w-bg-scrim);
+
+  --color-primary:     var(--w-text-primary);
+  --color-secondary:   var(--w-text-secondary);
+  --color-tertiary:    var(--w-text-tertiary);
+  --color-placeholder: var(--w-text-placeholder);
+  --color-disabled:    var(--w-text-disabled);
+  --color-on-inverse:  var(--w-text-inverse);
+
+  --color-border-subtle:  var(--w-border-subtle);
+  --color-border-default: var(--w-border-default);
+  --color-border-control: var(--w-border-control);
+  --color-border-strong:  var(--w-border-strong);
+
+  --color-action:             var(--w-action-primary-bg);
+  --color-action-fg:          var(--w-action-primary-fg);
+  --color-action-hover:       var(--w-action-primary-bg-hover);
+  --color-action-pressed:     var(--w-action-primary-bg-pressed);
+  --color-destructive:        var(--w-action-destructive-bg);
+  --color-destructive-fg:     var(--w-action-destructive-fg);
+
+  --color-signal:      var(--w-signal);
+  --color-signal-text: var(--w-signal-text);
+  --color-signal-tint: var(--w-signal-tint);
+
+  --color-positive:    var(--w-status-positive-strong);
+  --color-positive-fg: var(--w-status-positive-fg);
+  --color-positive-bg: var(--w-status-positive-bg);
+  --color-attention:    var(--w-status-attention-strong);
+  --color-attention-fg: var(--w-status-attention-fg);
+  --color-attention-bg: var(--w-status-attention-bg);
+  --color-critical:    var(--w-status-critical-strong);
+  --color-critical-fg: var(--w-status-critical-fg);
+  --color-critical-bg: var(--w-status-critical-bg);
+  --color-scheduled:    var(--w-status-scheduled-strong);
+  --color-scheduled-fg: var(--w-status-scheduled-fg);
+  --color-scheduled-bg: var(--w-status-scheduled-bg);
+  --color-waiting-fg: var(--w-status-neutral-fg);
+  --color-waiting-bg: var(--w-status-neutral-bg);
+
+  /* --- primitives: campaign and marketing only --- */
+  --color-white:     #FFFFFF;
+  --color-paper-50:  #FBFAF8;
+  --color-paper-100: #F5F3EF;
+  --color-paper-200: #EBE8E2;
+  --color-paper-300: #DCD8D0;
+  --color-paper-400: #C2BDB3;
+  --color-ink-400: #96918A; --color-ink-450: #8C877F; --color-ink-500: #78736C;
+  --color-ink-600: #5C5851; --color-ink-700: #403C36; --color-ink-800: #2A2724;
+  --color-ink-900: #1A1917; --color-ink-950: #0F0E0D;
+  --color-volt-100: #F2FFD1; --color-volt-300: #DCFF8A; --color-volt-500: #C3FF33;
+  --color-volt-700: #7FAD00; --color-volt-900: #3F5600;
+
+  /* --- type --- */
+  --font-display:   Archivo, system-ui, sans-serif;
+  --font-sans:      Inter, system-ui, -apple-system, sans-serif;
+  --font-editorial: Newsreader, Georgia, serif;
+  --font-mono:      "JetBrains Mono", ui-monospace, monospace;
+
+  --text-2xs: 0.6875rem;  --text-2xs--line-height: 1rem;
+  --text-xs:  0.75rem;    --text-xs--line-height: 1rem;
+  --text-sm:  0.875rem;   --text-sm--line-height: 1.25rem;
+  --text-base:1rem;       --text-base--line-height: 1.5rem;
+  --text-md:  1.0625rem;  --text-md--line-height: 1.625rem;
+  --text-lg:  1.25rem;    --text-lg--line-height: 1.75rem;  --text-lg--letter-spacing: -0.01em;
+  --text-xl:  1.5rem;     --text-xl--line-height: 1.875rem; --text-xl--letter-spacing: -0.02em;
+  --text-2xl: 1.875rem;   --text-2xl--line-height: 2.125rem;--text-2xl--letter-spacing: -0.02em;
+  --text-3xl: 2.375rem;   --text-3xl--line-height: 2.5rem;  --text-3xl--letter-spacing: -0.03em;
+  --text-4xl: 3rem;       --text-4xl--line-height: 3rem;    --text-4xl--letter-spacing: -0.03em;
+  --text-5xl: 4rem;       --text-5xl--line-height: 3.75rem; --text-5xl--letter-spacing: -0.03em;
+
+  --font-weight-regular: 400; --font-weight-medium: 500; --font-weight-semibold: 600;
+  --font-weight-bold: 700;    --font-weight-black: 800;
+
+  /* --- space, radius, controls --- */
+  --spacing: 0.25rem;  /* v4 spacing multiplier: p-4 = 1rem */
+  --spacing-control-sm: 2.5rem; --spacing-control-md: 3rem;
+  --spacing-control-lg: 3.5rem; --spacing-control-xl: 4rem;
+
+  --radius-xs: 4px; --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
+  --radius-xl: 20px; --radius-2xl: 28px; --radius-full: 999px;
+
+  --shadow-1: 0 1px 2px rgba(26,25,23,0.06);
+  --shadow-2: 0 2px 8px rgba(26,25,23,0.08);
+  --shadow-3: 0 8px 24px rgba(26,25,23,0.10);
+  --shadow-4: 0 -8px 32px rgba(26,25,23,0.14);
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-enter:    cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ease-exit:     cubic-bezier(0.3, 0, 0.8, 0.15);
+
+  --animate-listening: listening 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-sheet-in:  sheet-in 280ms cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+
+@keyframes listening {
+  0%, 100% { transform: scaleY(0.4); }
+  50%      { transform: scaleY(1); }
+}
+@keyframes sheet-in {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}

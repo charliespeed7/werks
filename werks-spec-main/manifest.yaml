@@ -1,0 +1,317 @@
+project: Werks
+source_of_truth: MASTER_CONTEXT.md
+
+# Phases
+#   1  Blocks MVP implementation. Nothing gets built until these are approved.
+#   2  Needed to ship and sell, but not to start building.
+#   3  Deferred. Real work, wrong time. Do not generate; move to phase 2 when the
+#      MVP has a live customer and the question becomes urgent.
+#
+# depends_on is enforced by scripts/next_doc.py. A document is only eligible when
+# every dependency is `approved`. This is the mechanism that stops the loop
+# generating doc 14 before doc 01 exists.
+
+generation_order:
+
+# ---------- Phase 1: MVP-blocking ----------
+
+- path: docs/01_vision.md
+  phase: 1
+  status: approved
+  depends_on: []
+
+- path: docs/19_competitor_analysis.md
+  phase: 1
+  status: queued
+  depends_on: [docs/01_vision.md]
+  note: >
+    Moved forward from position 19. The AI-answering category is already
+    price-anchored at £45-50/mo in the UK. Pricing and product scope cannot be
+    decided without this, so it is upstream of both.
+
+- path: docs/03_customer_persona.md
+  phase: 1
+  status: queued
+  depends_on: [docs/01_vision.md]
+
+- path: docs/02_product_principles.md
+  phase: 1
+  status: queued
+  depends_on: [docs/01_vision.md, docs/03_customer_persona.md]
+
+- path: docs/04_user_journey.md
+  phase: 1
+  status: queued
+  depends_on: [docs/01_vision.md, docs/03_customer_persona.md]
+
+- path: docs/18_pricing.md
+  phase: 1
+  status: queued
+  depends_on: [docs/19_competitor_analysis.md, docs/03_customer_persona.md]
+  note: >
+    Moved forward from position 18. Whether Werks sells at £45 or £149 changes
+    what the MVP must do. Deciding it after the architecture is decided is
+    backwards.
+
+- path: docs/17_roadmap.md
+  phase: 1
+  status: queued
+  depends_on: [docs/02_product_principles.md, docs/04_user_journey.md, docs/18_pricing.md]
+
+- path: docs/16_permissions.md
+  phase: 1
+  status: queued
+  depends_on: [docs/02_product_principles.md, docs/04_user_journey.md]
+
+- path: docs/21_evaluation.md
+  phase: 1
+  status: queued
+  depends_on: [docs/04_user_journey.md, docs/16_permissions.md]
+  note: >
+    New. Defines what a good call, quote and chase look like, the failure
+    taxonomy, the golden set, the red lines that must never be crossed, and the
+    measured bar for going live. Nothing customer-facing ships without this.
+
+- path: docs/05_system_architecture.md
+  phase: 1
+  status: queued
+  depends_on: [docs/04_user_journey.md, docs/16_permissions.md]
+
+- path: docs/07_memory_model.md
+  phase: 1
+  status: queued
+  depends_on: [docs/05_system_architecture.md]
+
+- path: docs/06_agent_architecture.md
+  phase: 1
+  status: queued
+  depends_on: [docs/05_system_architecture.md, docs/07_memory_model.md]
+  note: >
+    Must answer whether the MVP is one agent with tools or nine agents. The
+    nine-agent list in MASTER_CONTEXT is a capability map, not an implementation
+    commitment.
+
+- path: docs/08_workflow_library.md
+  phase: 1
+  status: queued
+  depends_on: [docs/04_user_journey.md, docs/16_permissions.md, docs/07_memory_model.md]
+
+- path: docs/13_database.md
+  phase: 1
+  status: queued
+  depends_on: [docs/05_system_architecture.md, docs/07_memory_model.md, docs/21_evaluation.md]
+  note: >
+    21_evaluation added as a dependency. 01_vision makes the sixty-second
+    text-back instrumentation binding on this document, and D3's scope rule
+    states the loss is unrecoverable — a schema written before evaluation has
+    defined what must be measured cannot be backfilled a year later. Without
+    this edge the queue permits exactly the failure the vision warns about.
+
+- path: docs/09_tool_integrations.md
+  phase: 1
+  status: queued
+  depends_on: [docs/05_system_architecture.md, docs/08_workflow_library.md]
+
+- path: docs/12_backend.md
+  phase: 1
+  status: queued
+  depends_on: [docs/05_system_architecture.md, docs/13_database.md]
+
+- path: docs/15_security.md
+  phase: 1
+  status: queued
+  depends_on: [docs/05_system_architecture.md, docs/16_permissions.md, docs/13_database.md]
+
+- path: docs/11_mobile_app.md
+  phase: 1
+  status: queued
+  depends_on: [docs/04_user_journey.md, docs/16_permissions.md]
+  note: >
+    Repointed from 10_voice_design to 16_permissions. Under D6a the Horizon 1
+    mobile app is the approval surface — the owner reviewing and approving
+    drafted messages, quotes and invoices — so it needs the permission model,
+    not voice design. The old edge also transitively blocked this document
+    behind a Horizon 2 capability.
+
+- path: docs/14_api_spec.md
+  phase: 1
+  status: queued
+  depends_on: [docs/12_backend.md, docs/13_database.md]
+
+# ---------- Phase 2: needed to ship and sell ----------
+
+- path: docs/10_voice_design.md
+  phase: 2
+  status: queued
+  depends_on: [docs/04_user_journey.md, docs/21_evaluation.md]
+  note: >
+    Moved from phase 1 to phase 2, and moved down the file to match. D6
+    settled that there is no live voice in Horizon 1, so this document no
+    longer blocks MVP implementation, which is what phase 1 means. Its
+    position in generation_order matters as well as its phase: next_doc.py
+    returns the first eligible entry regardless of phase, so leaving it in
+    the phase 1 block would have let it be generated ahead of documents the
+    MVP actually needs.
+
+- path: architecture/voice_pipeline.md
+  phase: 2
+  status: queued
+  depends_on: [docs/10_voice_design.md, docs/12_backend.md]
+
+- path: architecture/memory.md
+  phase: 2
+  status: queued
+  depends_on: [docs/07_memory_model.md, docs/13_database.md]
+
+- path: architecture/permissions.md
+  phase: 2
+  status: queued
+  depends_on: [docs/16_permissions.md, docs/12_backend.md]
+
+- path: architecture/conversation_engine.md
+  phase: 2
+  status: queued
+  depends_on: [docs/06_agent_architecture.md, docs/10_voice_design.md]
+
+- path: architecture/tool_calling.md
+  phase: 2
+  status: queued
+  depends_on: [docs/06_agent_architecture.md, docs/09_tool_integrations.md]
+
+- path: architecture/event_bus.md
+  phase: 2
+  status: queued
+  depends_on: [docs/12_backend.md, docs/05_system_architecture.md]
+
+- path: agents/receptionist.md
+  phase: 2
+  status: queued
+  depends_on: [docs/06_agent_architecture.md, docs/10_voice_design.md, docs/21_evaluation.md]
+
+- path: agents/scheduler.md
+  phase: 2
+  status: queued
+  depends_on: [docs/06_agent_architecture.md, docs/08_workflow_library.md]
+
+- path: agents/sales.md
+  phase: 2
+  status: queued
+  depends_on: [docs/06_agent_architecture.md, docs/08_workflow_library.md]
+
+- path: agents/finance.md
+  phase: 2
+  status: queued
+  depends_on: [docs/06_agent_architecture.md, docs/08_workflow_library.md]
+
+- path: agents/memory.md
+  phase: 2
+  status: queued
+  depends_on: [docs/06_agent_architecture.md, docs/07_memory_model.md]
+
+- path: agents/business_manager.md
+  phase: 2
+  status: queued
+  depends_on: [docs/06_agent_architecture.md, docs/08_workflow_library.md]
+
+- path: agents/assistant.md
+  phase: 2
+  status: queued
+  depends_on: [docs/06_agent_architecture.md]
+
+- path: prompts/phone_answering.md
+  phase: 2
+  status: queued
+  depends_on: [agents/receptionist.md, docs/21_evaluation.md]
+
+- path: prompts/lead_capture.md
+  phase: 2
+  status: queued
+  depends_on: [agents/receptionist.md, docs/21_evaluation.md]
+
+- path: prompts/quote_generation.md
+  phase: 2
+  status: queued
+  depends_on: [agents/sales.md, docs/21_evaluation.md]
+
+- path: prompts/invoice_followup.md
+  phase: 2
+  status: queued
+  depends_on: [agents/finance.md, docs/21_evaluation.md]
+
+- path: prompts/customer_followup.md
+  phase: 2
+  status: queued
+  depends_on: [agents/sales.md, docs/21_evaluation.md]
+
+- path: prompts/daily_summary.md
+  phase: 2
+  status: queued
+  depends_on: [agents/business_manager.md, docs/21_evaluation.md]
+  note: >
+    21_evaluation added, bringing this into line with every other prompt.
+    Owner-facing does not mean exempt: the daily summary is a claim about
+    what Werks did, and an overstatement miscalibrates the owner's trust in
+    the direction that matters most — towards approving drafts they should
+    have read. That is an evaluation question.
+
+- path: docs/20_pitch.md
+  phase: 2
+  status: queued
+  depends_on: [docs/01_vision.md, docs/17_roadmap.md, docs/18_pricing.md, docs/19_competitor_analysis.md]
+
+# ---------- Phase 3: deferred ----------
+
+- path: agents/procurement.md
+  phase: 3
+  status: deferred
+  depends_on: [docs/06_agent_architecture.md]
+  note: MASTER_CONTEXT explicitly excludes autonomous procurement from the MVP.
+
+- path: agents/marketing.md
+  phase: 3
+  status: deferred
+  depends_on: [docs/06_agent_architecture.md]
+  note: Reviews, referrals and reactivation are long-term expansion, not MVP.
+
+- path: prompts/supplier_ordering.md
+  phase: 3
+  status: deferred
+  depends_on: [agents/procurement.md]
+
+- path: architecture/planner.md
+  phase: 3
+  status: deferred
+  depends_on: [docs/06_agent_architecture.md]
+  note: Premature until the workflow library shows what actually needs planning.
+
+- path: architecture/reasoning.md
+  phase: 3
+  status: deferred
+  depends_on: [docs/06_agent_architecture.md]
+  note: Risks becoming a general essay on LLM reasoning rather than a Werks decision.
+
+- path: architecture/knowledge.md
+  phase: 3
+  status: deferred
+  depends_on: [docs/07_memory_model.md]
+  note: Overlaps heavily with the memory model. Merge or justify the split first.
+
+status_values:
+- queued
+- draft
+- review
+- approved
+- blocked
+- deferred
+
+rules:
+- Generate one file at a time.
+- Read MASTER_CONTEXT.md and all approved dependencies first.
+- A document is only eligible when every entry in depends_on is approved.
+- Never generate a phase 3 document. Promote it to phase 2 first, with a reason.
+- Do not invent product commitments that contradict the source of truth.
+- State assumptions explicitly, including which claims are single-sourced.
+- End every generated document with Open Questions and Acceptance Criteria.
+- Run the review prompt before marking a file approved.
+- If a document contradicts an approved upstream document, stop and flag it
+  rather than quietly resolving it in the downstream file.
