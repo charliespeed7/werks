@@ -112,6 +112,17 @@ const PAIRS = [
   ['blue-300', 'dk-surface', 'text', 'Booked text, dark'],
   ['ink-900', 'paper-50', 'text', 'Primary button label, dark theme (inverted)'],
   ['ink-900', 'red-300', 'text', 'Destructive button label, dark theme'],
+
+  // --- v1.1 conversational layer ---
+  // Only pairs that are new. The business bubble (paper-50 on ink-900), the draft
+  // outline (ink-450 / dk-border-hi on canvas) and Werks's own text on the canvas
+  // are already covered above and are not repeated here.
+  ['ink-900', 'paper-100', 'text', 'Customer message bubble'],
+  ['ink-600', 'paper-100', 'text', 'Timestamp inside a customer bubble'],
+  ['ink-450', 'paper-100', 'nonText', 'Uncertain-word underline inside a bubble (1.4.11)'],
+  ['dk-text', 'dk-raised', 'text', 'Customer message bubble, dark'],
+  ['dk-text-2', 'dk-raised', 'text', 'Timestamp inside a customer bubble, dark'],
+  ['volt-500', 'dk-raised', 'nonText', 'The Dot on a raised surface, dark'],
 ]
 
 let failures = 0

@@ -60,6 +60,17 @@
   --color-waiting-fg: var(--w-status-neutral-fg);
   --color-waiting-bg: var(--w-status-neutral-bg);
 
+  /* --- v1.1 conversational: who is speaking --- */
+  --color-bubble-in:        var(--w-bubble-in-bg);
+  --color-bubble-in-fg:     var(--w-bubble-in-fg);
+  --color-bubble-out:       var(--w-bubble-out-bg);
+  --color-bubble-out-fg:    var(--w-bubble-out-fg);
+  --color-bubble-draft:     var(--w-bubble-draft-border);
+  --color-werks:            var(--w-werks-fg);
+  --color-werks-rail:       var(--w-werks-rail);
+  --color-system:           var(--w-system-fg);
+  --color-quiet:            var(--w-quiet-fg);
+
   /* --- primitives: campaign and marketing only --- */
   --color-white:     #FFFFFF;
   --color-paper-50:  #FBFAF8;
@@ -110,9 +121,15 @@
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --ease-enter:    cubic-bezier(0.05, 0.7, 0.1, 1);
   --ease-exit:     cubic-bezier(0.3, 0, 0.8, 0.15);
+  /* v1.1. Symmetrical sine: a breath has no accent, a pulse does. */
+  --ease-breath:   cubic-bezier(0.37, 0, 0.63, 1);
+  --ease-arrive:   cubic-bezier(0.05, 0.7, 0.1, 1);
 
   --animate-listening: listening 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-sheet-in:  sheet-in 280ms cubic-bezier(0.05, 0.7, 0.1, 1);
+  /* v1.1. Only while Werks is working, and it stops when the work does. */
+  --animate-breathe:   w-breathe 3200ms cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  --animate-arrive:    w-arrive 200ms cubic-bezier(0.05, 0.7, 0.1, 1) both;
 }
 
 @keyframes listening {
@@ -122,4 +139,12 @@
 @keyframes sheet-in {
   from { transform: translateY(100%); }
   to   { transform: translateY(0); }
+}
+@keyframes w-breathe {
+  0%, 100% { transform: scale(0.86); opacity: 0.55; }
+  50%      { transform: scale(1);    opacity: 1; }
+}
+@keyframes w-arrive {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
 }

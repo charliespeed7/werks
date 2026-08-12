@@ -16,7 +16,7 @@ Typing is the worst part of any trade app. The owner has gloves on, or wet hands
 
 ## The states
 
-Six, and the transitions between them.
+Six, and the transitions between them. v1.1 expands this to nine and adds ambient listening, the live transcript, interruption and speaking: see `conversational/02-voice-states.md`. Everything below is unchanged by that expansion.
 
 ```
    IDLE ──hold──▶ LISTENING ──release──▶ WORKING ──▶ REVIEW ──▶ done

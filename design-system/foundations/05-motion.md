@@ -42,7 +42,7 @@ exit      cubic-bezier(0.3, 0, 0.8, 0.15) things leaving
 - Anything on a loop, except the listening indicator.
 - Anything on scroll: no parallax, no reveal-on-scroll, no sticky-header shrinking beyond an opacity change.
 - Anything celebrating. No confetti, no success bounce, no haptic flourish on approval.
-- The Dot. It sits still. A pulsing dot is a notification badge begging for attention, which is the opposite of what this brand is.
+- The Dot, **except while Werks is working** (amended in v1.1, see `conversational/00-principles.md`). It sits still at idle, still while something waits for you, and still while a background task runs for three days. A pulsing dot is a notification badge begging for attention, which is the opposite of what this brand is. A dot that breathes *because a request is in flight* and stops the instant it lands is a status readout, and that is the only motion the Dot is permitted. The test: if the animation would still be running with nothing happening, it is a badge and it is banned.
 
 ## The listening animation
 

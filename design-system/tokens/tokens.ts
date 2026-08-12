@@ -44,6 +44,14 @@ export const lightTheme = {
 
   signal: p.volt500, signalText: p.volt900, signalTint: p.volt100,
 
+  /* v1.1 conversational: who is speaking, carried by surface */
+  bubbleInBg: p.paper100, bubbleInFg: p.ink900, bubbleInMeta: p.ink600,
+  bubbleOutBg: p.ink900, bubbleOutFg: p.paper50, bubbleOutMeta: p.ink400,
+  bubbleDraftBorder: p.ink450,
+  werksFg: p.ink900, werksMeta: p.ink600, werksRail: p.paper300,
+  systemFg: p.ink600, systemRule: p.paper200,
+  quietFg: p.ink600, quietRule: p.paper300,
+
   statusPositiveFg: p.green800, statusPositiveBg: p.green100, statusPositiveStrong: p.green600,
   statusAttentionFg: p.amber800, statusAttentionBg: p.amber100, statusAttentionStrong: p.amber600,
   statusCriticalFg: p.red800, statusCriticalBg: p.red100, statusCriticalStrong: p.red600,
@@ -70,6 +78,13 @@ export const darkTheme: typeof lightTheme = {
   actionDestructiveBg: p.red300, actionDestructiveFg: p.ink900,
 
   signal: p.volt500, signalText: p.volt500, signalTint: p.dkRaised,
+
+  bubbleInBg: p.dkRaised, bubbleInFg: p.dkText, bubbleInMeta: p.dkText2,
+  bubbleOutBg: p.paper50, bubbleOutFg: p.ink900, bubbleOutMeta: p.ink600,
+  bubbleDraftBorder: p.dkBorderHi,
+  werksFg: p.dkText, werksMeta: p.dkText2, werksRail: p.dkBorder,
+  systemFg: p.dkText2, systemRule: p.dkBorder,
+  quietFg: p.dkText2, quietRule: p.dkBorder,
 
   statusPositiveFg: p.green300, statusPositiveBg: 'rgba(14,124,85,0.18)', statusPositiveStrong: p.green300,
   statusAttentionFg: p.amber300, statusAttentionBg: 'rgba(143,90,0,0.24)', statusAttentionStrong: p.amber300,
@@ -120,12 +135,47 @@ export const type = {
 
 export const duration = {
   instant: 80, quick: 120, base: 180, calm: 240, sheet: 280,
+  /* v1.1. word/bubble/turn/collapse/bargein are transitions and stay under 280.
+     breath and ambient are loop PERIODS, not transitions. */
+  word: 90, bubble: 200, turn: 240, collapse: 240, bargein: 120,
+  breath: 3200, ambient: 4800,
 } as const
 
 export const easing = {
   standard: [0.2, 0, 0, 1],
   enter: [0.05, 0.7, 0.1, 1],
   exit: [0.3, 0, 0.8, 0.15],
+  /** v1.1. Symmetrical sine: a breath has no accent, a pulse does. */
+  breath: [0.37, 0, 0.63, 1],
+  /** v1.1. Things arriving, decelerating into place. */
+  arrive: [0.05, 0.7, 0.1, 1],
+} as const
+
+/**
+ * v1.1 conversational layer. Rhythm in px, the Dot in px, motion amounts unitless.
+ * A thread has three distances and no middle ground.
+ */
+export const conversation = {
+  bubblePadY: 12, bubblePadX: 16,
+  bubbleRadius: 20,
+  /** The corner nearest the speaker. The entire tail treatment. */
+  bubbleRadiusTail: 4,
+  /** Same speaker / the other person replies / a new hour or day. */
+  turnGapSame: 4, turnGap: 16, turnGapBlock: 32,
+  quietInset: 24,
+  rail: 24, railGap: 12,
+} as const
+
+/** The Dot, sized by state. Absence is a state: no dot means Werks is off. */
+export const dot = {
+  ambient: 8, thinking: 12, speaking: 12, ring: 12, ringWidth: 2,
+  ambientOpacity: 0.55,
+  breathScaleMin: 0.86, breathScaleMax: 1, breathOpacityMin: 0.55,
+} as const
+
+/** Five maximum staggered arrivals. Beyond that they appear together. */
+export const stagger = {
+  word: 40, bubble: 60, option: 40,
 } as const
 
 export const z = {

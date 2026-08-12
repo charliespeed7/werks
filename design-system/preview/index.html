@@ -100,7 +100,8 @@
   <div class="pv-top__inner">
     <span class="w-wordmark" style="font-size:1.375rem">WERKS<span class="w-wordmark__stop">.</span></span>
     <div class="pv-inline">
-      <span class="w-meta">Design system v1.0</span>
+      <span class="w-meta">Design system v1.1</span>
+      <a class="w-btn w-btn--secondary w-btn--sm" href="conversational.html">Conversational layer</a>
       <button class="w-btn w-btn--secondary w-btn--sm" id="theme-toggle" aria-label="Switch theme">Dark</button>
     </div>
   </div>
@@ -113,7 +114,7 @@
     <a href="#space">Space</a><a href="#icons">Icons</a><a href="#buttons">Buttons</a>
     <a href="#inputs">Inputs</a><a href="#status">Status</a><a href="#cards">Cards</a>
     <a href="#voice">Voice</a><a href="#nav">Navigation</a><a href="#sheets">Sheets</a>
-    <a href="#screens">Screens</a>
+    <a href="#screens">Screens</a><a href="conversational.html">Conversational layer &rarr;</a>
   </div>
 
   <!-- ===================================================== BRAND -->
@@ -677,9 +678,26 @@
     </div>
   </section>
 
+  <section class="pv-sec" id="conversational">
+    <h2>The conversational layer</h2>
+    <p class="pv-lede">v1.1. Bubbles, threads, quiet blocks, the full voice flow, and the Dot as a living thing. Most of what the owner actually sees is a conversation, and the approval card is one frame of it.</p>
+
+    <div class="pv-grid pv-grid--4">
+      <div class="pv-panel"><div class="w-overline">Conversation</div><p class="w-body" style="margin-top:8px">Message bubbles, threads, inline actions, quiet blocks. Werks gets no bubble: it speaks from a rail.</p></div>
+      <div class="pv-panel"><div class="w-overline">Voice</div><p class="w-body" style="margin-top:8px">Nine states, ambient listening, live transcript, interruption, error recovery, voice plus visual.</p></div>
+      <div class="pv-panel"><div class="w-overline">Patterns</div><p class="w-body" style="margin-top:8px">The Brief as a conversation, approval aloud, nudges, escalation, multi-turn booking, handoff.</p></div>
+      <div class="pv-panel"><div class="w-overline">Alive</div><p class="w-body" style="margin-top:8px">Off, ambient, thinking, working, listening. One shape, five states, and absence is one of them.</p></div>
+    </div>
+
+    <div class="pv-inline" style="margin-top:24px">
+      <a class="w-btn w-btn--primary w-btn--lg" href="conversational.html">Open the conversational preview</a>
+      <span class="pv-note" style="margin:0">Two v1.0 rules are amended, both narrowly, both written up in <code style="font-family:var(--w-font-mono);font-size:0.85em">conversational/00-principles.md</code>.</span>
+    </div>
+  </section>
+
   <section class="pv-sec">
     <h2>Contrast</h2>
-    <p class="pv-lede">Every permitted pair is verified in CI by <code style="font-family:var(--w-font-mono);font-size:0.85em">node tokens/verify-contrast.mjs</code>. 38 pairs, zero failures. Body text is 16.84:1 because this is read outdoors.</p>
+    <p class="pv-lede">Every permitted pair is verified in CI by <code style="font-family:var(--w-font-mono);font-size:0.85em">node tokens/verify-contrast.mjs</code>. 44 pairs, zero failures. Body text is 16.84:1 because this is read outdoors.</p>
     <table class="pv-table">
       <tr><th>Pair</th><th>Ratio</th><th>Use</th></tr>
       <tr><td>ink-900 on paper-50</td><td>16.84:1</td><td>Primary text</td></tr>

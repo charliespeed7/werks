@@ -463,3 +463,172 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* =============================================================================
+   v1.1 — THE CONVERSATIONAL LAYER
+   Added for design-system/conversational/. Everything below is either a new
+   primitive (rhythm, motion, the Dot's sizes) or a new semantic role for a
+   surface that did not exist in v1 (a bubble, a rail, a quiet block).
+
+   No new colours. Every value below resolves to a v1 primitive.
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   TIER 1 — CONVERSATIONAL PRIMITIVES
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* --- Conversational rhythm ------------------------------------------------
+     A thread has three distances and no middle ground, same as everything else
+     in 03-spacing-layout.md: same speaker, new speaker, new block of time.
+     -------------------------------------------------------------------------- */
+  --w-bubble-pad-y:      var(--w-space-3);   /* 12 */
+  --w-bubble-pad-x:      var(--w-space-4);   /* 16 */
+  --w-bubble-radius:     var(--w-radius-xl); /* 20 */
+  --w-bubble-radius-tail: var(--w-radius-xs);/*  4 — the corner nearest the speaker */
+  --w-bubble-max:        min(85%, 26rem);    /* never wider than the reading measure */
+
+  --w-turn-gap-same:     var(--w-space-1);   /*  4 — same speaker, next bubble  */
+  --w-turn-gap:          var(--w-space-4);   /* 16 — the other person replies   */
+  --w-turn-gap-block:    var(--w-space-8);   /* 32 — a new hour, a new day      */
+
+  --w-quiet-inset:       var(--w-space-6);   /* 24 — indent of a handled-quietly block */
+  --w-rail-w:            1.5rem;             /* 24 — the column Werks speaks from */
+  --w-rail-gap:          var(--w-space-3);   /* 12 — rail to text */
+
+  /* --- The Dot, sized by state ----------------------------------------------
+     One shape, five states. See conversational/04-alive-states.md.
+     -------------------------------------------------------------------------- */
+  --w-dot-ambient:       8px;    /* present, not doing anything     */
+  --w-dot-thinking:      12px;   /* working on something, right now */
+  --w-dot-speaking:      12px;   /* reading something to you        */
+  --w-dot-ring-size:     12px;   /* working in the background       */
+  --w-dot-ring-width:    2px;
+
+  /* --- Conversational motion ------------------------------------------------
+     No transition exceeds 280ms, as in 05-motion.md. The two long values are
+     loop *periods*, not transitions: a breath and an ambient cycle. A slow loop
+     is calm; a fast one is a spinner.
+     -------------------------------------------------------------------------- */
+  --w-duration-word:     90ms;    /* one word landing in a live transcript   */
+  --w-duration-bubble:   200ms;   /* a message arriving                      */
+  --w-duration-turn:     240ms;   /* the thread settling after a turn        */
+  --w-duration-collapse: 240ms;   /* a quiet block opening                   */
+  --w-duration-bargein:  120ms;   /* speech stopping when interrupted. Hard ceiling. */
+  --w-duration-breath:   3200ms;  /* one full breath of the Dot              */
+  --w-duration-ambient:  4800ms;  /* one ambient presence cycle              */
+
+  --w-stagger-word:      40ms;    /* between words in a revealed transcript  */
+  --w-stagger-bubble:    60ms;    /* between messages arriving together      */
+  --w-stagger-option:    40ms;    /* between spoken options appearing        */
+
+  /* Symmetrical sine. No attack, no overshoot: a breath is not a bounce. */
+  --w-ease-breath:  cubic-bezier(0.37, 0, 0.63, 1);
+  /* Words and bubbles arrive on the standard curve, decelerating into place. */
+  --w-ease-arrive:  cubic-bezier(0.05, 0.7, 0.1, 1);
+
+  --w-breath-scale-min:   0.86;
+  --w-breath-scale-max:   1;
+  --w-breath-opacity-min: 0.55;
+  --w-ambient-opacity:    0.55;   /* the Dot at rest, present but not working */
+}
+
+/* -----------------------------------------------------------------------------
+   TIER 2 — CONVERSATIONAL SEMANTIC (light)
+
+   Who is speaking is carried by surface and alignment, never by colour.
+   Four voices: the customer, the business, Werks, and the record.
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* The customer. Incoming, left, filled, quoted. */
+  --w-bubble-in-bg:      var(--w-paper-100);
+  --w-bubble-in-fg:      var(--w-ink-900);
+  --w-bubble-in-meta:    var(--w-ink-600);
+  --w-bubble-in-border:  transparent;
+
+  /* The business, in the owner's trading name. Outgoing, right, ink. */
+  --w-bubble-out-bg:     var(--w-ink-900);
+  --w-bubble-out-fg:     var(--w-paper-50);
+  --w-bubble-out-meta:   var(--w-ink-400);
+  --w-bubble-out-border: transparent;
+
+  /* A draft: an outgoing bubble that has not happened yet. Outline, not fill. */
+  --w-bubble-draft-bg:     transparent;
+  --w-bubble-draft-fg:     var(--w-ink-900);
+  --w-bubble-draft-border: var(--w-ink-450);
+
+  /* Werks talking to the owner. No bubble. A rail, and text on the canvas. */
+  --w-werks-fg:          var(--w-ink-900);
+  --w-werks-meta:        var(--w-ink-600);
+  --w-werks-rail:        var(--w-paper-300);
+
+  /* The record: system events, stops, timestamps. Nothing is speaking. */
+  --w-system-fg:         var(--w-ink-600);
+  --w-system-rule:       var(--w-paper-200);
+
+  /* A block Werks handled without needing anyone. */
+  --w-quiet-fg:          var(--w-ink-600);
+  --w-quiet-rule:        var(--w-paper-300);
+
+  /* Werks off. The one surface that picks its own theme in both themes: it is a
+     statement about the hour, not about ambient light. Deliberately not
+     overridden below. */
+  --w-sleep-bg:          var(--w-dk-bg);
+  --w-sleep-fg:          var(--w-dk-text);
+  --w-sleep-fg-2:        var(--w-dk-text-2);
+  --w-sleep-border:      var(--w-dk-border-hi);
+}
+
+/* -----------------------------------------------------------------------------
+   TIER 2 — CONVERSATIONAL SEMANTIC (dark)
+   Same four voices, inverted. The business bubble stays the loud one.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --w-bubble-in-bg:      var(--w-dk-raised);
+    --w-bubble-in-fg:      var(--w-dk-text);
+    --w-bubble-in-meta:    var(--w-dk-text-2);
+
+    --w-bubble-out-bg:     var(--w-paper-50);
+    --w-bubble-out-fg:     var(--w-ink-900);
+    --w-bubble-out-meta:   var(--w-ink-600);
+
+    --w-bubble-draft-fg:     var(--w-dk-text);
+    --w-bubble-draft-border: var(--w-dk-border-hi);
+
+    --w-werks-fg:          var(--w-dk-text);
+    --w-werks-meta:        var(--w-dk-text-2);
+    --w-werks-rail:        var(--w-dk-border);
+
+    --w-system-fg:         var(--w-dk-text-2);
+    --w-system-rule:       var(--w-dk-border);
+
+    --w-quiet-fg:          var(--w-dk-text-2);
+    --w-quiet-rule:        var(--w-dk-border);
+  }
+}
+
+:root[data-theme="dark"] {
+  --w-bubble-in-bg:      var(--w-dk-raised);
+  --w-bubble-in-fg:      var(--w-dk-text);
+  --w-bubble-in-meta:    var(--w-dk-text-2);
+
+  --w-bubble-out-bg:     var(--w-paper-50);
+  --w-bubble-out-fg:     var(--w-ink-900);
+  --w-bubble-out-meta:   var(--w-ink-600);
+
+  --w-bubble-draft-fg:     var(--w-dk-text);
+  --w-bubble-draft-border: var(--w-dk-border-hi);
+
+  --w-werks-fg:          var(--w-dk-text);
+  --w-werks-meta:        var(--w-dk-text-2);
+  --w-werks-rail:        var(--w-dk-border);
+
+  --w-system-fg:         var(--w-dk-text-2);
+  --w-system-rule:       var(--w-dk-border);
+
+  --w-quiet-fg:          var(--w-dk-text-2);
+  --w-quiet-rule:        var(--w-dk-border);
+}

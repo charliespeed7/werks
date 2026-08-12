@@ -12,7 +12,7 @@ Every permitted pair is verified in CI:
 node tokens/verify-contrast.mjs
 ```
 
-38 pairs, zero failures. Primary text is 16.84:1 against the canvas. Secondary is 6.78:1. Control borders clear 1.4.11 at 3.42:1. Status chips all clear 7:1.
+44 pairs, zero failures. Primary text is 16.84:1 against the canvas. Secondary is 6.78:1. Control borders clear 1.4.11 at 3.42:1. Status chips all clear 7:1.
 
 The rule that keeps it that way: **never lighten a grey to make a mock look calmer.** Remove something from the screen instead. If a new pair is introduced, it goes into `verify-contrast.mjs` before it goes into a component.
 

@@ -1,5 +1,7 @@
 # Werks Design System
 
+**v1.1** — adds the conversational and voice interaction layer. See `conversational/`.
+
 The design system for Werks: an AI business partner for UK gas and heating engineers running one to three vans.
 
 Built against `MASTER_CONTEXT.md` and `docs/01_vision.md` (approved). Where this system makes a claim the specification has not settled, it is marked as an assumption and says which document owns the answer.
@@ -35,6 +37,21 @@ Never truncated, never summarised, never behind "show more". The owner is accept
 
 ---
 
+## What v1.1 adds, and what it amends
+
+v1.0 designed the surfaces where a decision gets made. Most of what the owner actually sees is a **conversation**, and the approval card is one frame of it. `conversational/` is the rest: bubbles, threads, the full voice loop, and the Dot as the product's answer to "is Werks doing anything right now?"
+
+Two v1.0 rules are amended, both narrowly, both written up with their constraints in `conversational/00-principles.md`:
+
+| v1.0 said | v1.1 says | Why it is safe |
+|---|---|---|
+| `voice-first.md` rule 8: **never speak back** | Werks may speak **to the owner**, under six conditions | Everything spoken is simultaneously on screen, in full. Speech is a second channel, never the only one. Customer-facing voice is still Horizon 2. |
+| `05-motion.md`: **the Dot sits still** | The Dot breathes **while Werks is working**, and stops the instant the work does | A dot moving because work is happening is a status readout. A dot moving to be noticed is a badge, and that is still banned. |
+
+Nothing else changes. No component is replaced, no token is redefined, no colour is added.
+
+---
+
 ## Structure
 
 ```
@@ -64,15 +81,25 @@ design-system/
 │   ├── voice-first.md         What voice is for, and the four rules that keep it safe
 │   ├── approval-and-trust.md  The approval contract, batch friction, earned autonomy, red lines
 │   └── accessibility.md       WCAG 2.2 AA, plus the two tests this audience actually fails
+├── conversational/            v1.1 — most of the product is a conversation
+│   ├── README.md              The four ideas, and what the layer refuses
+│   ├── 00-principles.md       The eight rules, and the two v1.0 amendments in full
+│   ├── 01-conversation-components.md  Bubbles, threads, inline actions, quiet blocks
+│   ├── 02-voice-states.md     Nine states, ambient, transcript, interruption, recovery, hybrid
+│   ├── 03-conversational-patterns.md  Brief, approval aloud, nudges, escalation, multi-turn, handoff
+│   ├── 04-alive-states.md     The Dot: off, ambient, thinking, working, listening
+│   ├── 05-motion.md           Every motion spec in the layer
+│   └── conversational.css     All of the above, implemented
 ├── tokens/
 │   ├── tokens.json            Source of truth (W3C DTCG format)
 │   ├── tokens.css             CSS custom properties, light + dark
 │   ├── tokens.ts              React Native / TypeScript export
 │   ├── tailwind.config.js     Tailwind v3
 │   ├── tailwind-v4.css        Tailwind v4 @theme
-│   └── verify-contrast.mjs    CI check: 38 pairs, zero failures
+│   └── verify-contrast.mjs    CI check: 44 pairs, zero failures
 └── preview/
-    └── index.html             Everything rendered, in both themes
+    ├── index.html             Everything rendered, in both themes
+    └── conversational.html    The v1.1 layer, rendered and animated
 ```
 
 ---
@@ -80,8 +107,9 @@ design-system/
 ## Start here
 
 ```bash
-open design-system/preview/index.html      # see all of it
-node design-system/tokens/verify-contrast.mjs   # prove the palette
+open design-system/preview/index.html            # see all of it
+open design-system/preview/conversational.html   # the v1.1 conversational layer
+node design-system/tokens/verify-contrast.mjs    # prove the palette
 ```
 
 Then read, in order: `foundations/00-brand.md`, `patterns/approval-and-trust.md`, `components/cards.md`. Those three carry most of the thinking.
@@ -92,6 +120,7 @@ Then read, in order: `foundations/00-brand.md`, `patterns/approval-and-trust.md`
 ```html
 <link rel="stylesheet" href="design-system/tokens/tokens.css">
 <link rel="stylesheet" href="design-system/components/werks.css">
+<link rel="stylesheet" href="design-system/conversational/conversational.css">
 ```
 
 **Tailwind v3** — `module.exports = require('./design-system/tokens/tailwind.config.js')`

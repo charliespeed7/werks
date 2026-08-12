@@ -53,8 +53,10 @@ The listening bars are driven by microphone levels, not by a keyframe loop. A ca
 **7. Offline is normal.**
 Audio queues locally with `Saved on this phone`. It transcribes when signal returns. Cellars and lofts have no signal and the product assumes it.
 
-**8. Never speak back.**
-Werks does not have a voice. It has no text-to-speech, no spoken confirmations, and no read-aloud. Output is text on a screen, because text can be checked, quoted in an audit trail, and read in a noisy room where audio cannot.
+**8. Never speak back.** — **amended in v1.1. See `conversational/00-principles.md`.**
+Werks does not have a voice *to a customer*. Customer-facing voice remains Horizon 2 under `01_vision` D6 and nothing has moved it.
+
+Owner-facing speech is now permitted under six conditions, the binding one being that **everything spoken is simultaneously on screen, in full, word for word**. Speech is a second channel, never the only one, so the reasons this rule existed all survive: output can still be checked before it acts, the audit trail is still textual, and a noisy room still gets text. What changed is the recognition that an owner driving between jobs with four approvals waiting should not have to stop and take a glove off to read them.
 
 ## Latency
 

@@ -9,7 +9,18 @@
 | `tokens.ts` | React Native, Expo | Numbers in px rather than rem, since RN has no rem. |
 | `tailwind.config.js` | Tailwind v3 | Replaces the default palette entirely. |
 | `tailwind-v4.css` | Tailwind v4 | `@theme` block. Use instead of the config file, not alongside. |
-| `verify-contrast.mjs` | CI | 38 pairs, zero failures. Run it on every PR. |
+| `verify-contrast.mjs` | CI | 44 pairs, zero failures. Run it on every PR. |
+
+## v1.1
+
+`tokens.json` is at `1.1.0`. The conversational layer added, in every file in this folder:
+
+- **Conversational rhythm** — `conversation.*`: bubble padding and radius, the three turn gaps, the quiet-block inset, the rail. A thread has three distances and no middle ground.
+- **Conversational motion** — `duration.word` / `bubble` / `turn` / `collapse` / `bargein`, plus `easing.breath` and `easing.arrive`. Every transition is still under the 280ms ceiling. `duration.breath` and `duration.ambient` are loop *periods*, not transitions.
+- **The Dot, sized by state** — `size.dot*` and the breath amplitudes. Five states, one shape, and absence is one of them.
+- **Four conversational voices** — `semantic.conversation.*`: the customer's bubble, the business's bubble, the draft outline, Werks's rail, the record, the quiet block. No new colours: every one resolves to a v1.0 primitive.
+
+Why these are tokens rather than component CSS: the rhythm and the breath are the two things most likely to be nudged by eye on a single screen, and a nudged 3200ms breath on one surface and 2400ms on another is how a system stops feeling like one product.
 
 ## Two tiers, and why it matters
 

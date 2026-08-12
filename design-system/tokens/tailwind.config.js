@@ -58,6 +58,21 @@ module.exports = {
         tint:    'var(--w-signal-tint)',
       },
 
+      // --- v1.1 conversational: who is speaking, carried by surface ---
+      bubble: {
+        in:        'var(--w-bubble-in-bg)',
+        'in-fg':   'var(--w-bubble-in-fg)',
+        out:       'var(--w-bubble-out-bg)',
+        'out-fg':  'var(--w-bubble-out-fg)',
+        draft:     'var(--w-bubble-draft-border)',
+      },
+      werks: {
+        DEFAULT: 'var(--w-werks-fg)',
+        rail:    'var(--w-werks-rail)',
+      },
+      system: 'var(--w-system-fg)',
+      quiet:  'var(--w-quiet-fg)',
+
       positive:  { DEFAULT: 'var(--w-status-positive-strong)',  fg: 'var(--w-status-positive-fg)',  bg: 'var(--w-status-positive-bg)' },
       attention: { DEFAULT: 'var(--w-status-attention-strong)', fg: 'var(--w-status-attention-fg)', bg: 'var(--w-status-attention-bg)' },
       critical:  { DEFAULT: 'var(--w-status-critical-strong)',  fg: 'var(--w-status-critical-fg)',  bg: 'var(--w-status-critical-bg)' },
@@ -121,12 +136,17 @@ module.exports = {
 
     transitionDuration: {
       instant: '80ms', quick: '120ms', DEFAULT: '180ms', calm: '240ms', sheet: '280ms',
+      // v1.1 conversational. All still under the 280ms ceiling.
+      word: '90ms', bubble: '200ms', turn: '240ms', collapse: '240ms', bargein: '120ms',
     },
     transitionTimingFunction: {
       DEFAULT: 'cubic-bezier(0.2, 0, 0, 1)',
       standard: 'cubic-bezier(0.2, 0, 0, 1)',
       enter: 'cubic-bezier(0.05, 0.7, 0.1, 1)',
       exit: 'cubic-bezier(0.3, 0, 0.8, 0.15)',
+      // v1.1. Symmetrical sine: a breath has no accent, a pulse does.
+      breath: 'cubic-bezier(0.37, 0, 0.63, 1)',
+      arrive: 'cubic-bezier(0.05, 0.7, 0.1, 1)',
     },
 
     zIndex: { base: '0', sticky: '100', dock: '200', scrim: '300', sheet: '310', toast: '400', modal: '500' },
@@ -143,10 +163,22 @@ module.exports = {
           from: { transform: 'translateY(100%)' },
           to:   { transform: 'translateY(0)' },
         },
+        // v1.1. The Dot, and only while Werks is working. See
+        // conversational/00-principles.md for why this is not the banned pulse.
+        breathe: {
+          '0%, 100%': { transform: 'scale(0.86)', opacity: '0.55' },
+          '50%':      { transform: 'scale(1)',    opacity: '1' },
+        },
+        arrive: {
+          from: { opacity: '0', transform: 'translateY(8px)' },
+          to:   { opacity: '1', transform: 'none' },
+        },
       },
       animation: {
         listening: 'listening 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'sheet-in': 'sheet-in 280ms cubic-bezier(0.05, 0.7, 0.1, 1)',
+        breathe: 'breathe 3200ms cubic-bezier(0.37, 0, 0.63, 1) infinite',
+        arrive: 'arrive 200ms cubic-bezier(0.05, 0.7, 0.1, 1) both',
       },
     },
   },
