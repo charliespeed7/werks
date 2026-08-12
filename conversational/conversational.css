@@ -1,0 +1,415 @@
+/* =============================================================================
+   WERKS — THE CONVERSATIONAL LAYER  (design system v1.1)
+   Plain CSS on top of tokens/tokens.css and components/werks.css.
+
+     <link rel="stylesheet" href="../tokens/tokens.css">
+     <link rel="stylesheet" href="../components/werks.css">
+     <link rel="stylesheet" href="conversational.css">
+
+   Semantic tokens only. A --w-ink-* or --w-paper-* below the token file is a bug.
+   ============================================================================= */
+
+/* ==========================================================================
+   THREAD
+   ========================================================================== */
+
+.w-thread { display: flex; flex-direction: column; }
+
+/* Property and appliance. Permanent, never scrolls away. */
+.w-thread__context {
+  position: sticky; top: 0; z-index: var(--w-z-sticky);
+  padding: var(--w-space-2) var(--w-space-4);
+  background: var(--w-bg-canvas); border-bottom: 1px solid var(--w-border-subtle);
+  font-size: var(--w-text-sm); color: var(--w-text-secondary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* A new hour, a new day. */
+.w-thread__break {
+  display: flex; align-items: center; gap: var(--w-space-3);
+  margin: var(--w-turn-gap-block) 0 var(--w-turn-gap);
+  font-size: var(--w-text-xs); color: var(--w-system-fg);
+}
+.w-thread__break::before, .w-thread__break::after {
+  content: ""; flex: 1; height: 1px; background: var(--w-system-rule);
+}
+
+/* The record: events, times, actors. Nothing is speaking. */
+.w-sysline {
+  margin: var(--w-turn-gap) 0;
+  font-family: var(--w-font-mono); font-size: var(--w-text-xs);
+  color: var(--w-system-fg); text-align: center;
+}
+.w-sysline--stopped {
+  text-align: left; padding-left: var(--w-space-3);
+  border-left: 3px solid var(--w-status-critical-strong);
+  color: var(--w-status-critical-fg); font-family: var(--w-font-text);
+  font-size: var(--w-text-sm);
+}
+
+/* "1 new" — shown instead of auto-scrolling under a reading thumb. */
+.w-newpill {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  bottom: calc(7.5rem + var(--w-safe-bottom));
+  display: inline-flex; align-items: center; gap: var(--w-space-2);
+  min-height: var(--w-control-md); padding: 0 var(--w-space-4);
+  border-radius: var(--w-radius-full); border: 0; cursor: pointer;
+  background: var(--w-bg-inverse); color: var(--w-text-inverse);
+  font: inherit; font-size: var(--w-text-sm); font-weight: var(--w-weight-semibold);
+  box-shadow: var(--w-elevation-dock);
+  animation: w-arrive var(--w-duration-bubble) var(--w-ease-arrive) both;
+}
+
+/* ==========================================================================
+   MESSAGE BUBBLES
+   Who is speaking is carried by position and surface. Never by colour.
+   ========================================================================== */
+
+.w-msg { display: flex; flex-direction: column; margin-top: var(--w-turn-gap); }
+.w-msg + .w-msg--same { margin-top: var(--w-turn-gap-same); }
+
+.w-msg__bubble {
+  max-width: var(--w-bubble-max);
+  padding: var(--w-bubble-pad-y) var(--w-bubble-pad-x);
+  border: 1px solid transparent; border-radius: var(--w-bubble-radius);
+  animation: w-arrive var(--w-duration-bubble) var(--w-ease-arrive) both;
+}
+.w-msg__text {
+  margin: 0; font-size: var(--w-text-md); line-height: var(--w-leading-normal);
+  overflow-wrap: anywhere;
+}
+.w-msg__meta {
+  margin: var(--w-space-1) 0 0;
+  font-size: var(--w-text-xs); color: var(--w-text-secondary);
+}
+.w-msg__who { font-weight: var(--w-weight-medium); color: var(--w-text-secondary); }
+
+/* --- the customer: left, filled ------------------------------------------- */
+.w-msg--in { align-items: flex-start; }
+.w-msg--in .w-msg__bubble {
+  background: var(--w-bubble-in-bg); color: var(--w-bubble-in-fg);
+  border-color: var(--w-bubble-in-border);
+  border-bottom-left-radius: var(--w-bubble-radius-tail);
+}
+.w-msg--in .w-msg__meta { text-align: left; }
+
+/* --- the business, in the owner's trading name: right, ink ---------------- */
+.w-msg--out { align-items: flex-end; }
+.w-msg--out .w-msg__bubble {
+  background: var(--w-bubble-out-bg); color: var(--w-bubble-out-fg);
+  border-color: var(--w-bubble-out-border);
+  border-bottom-right-radius: var(--w-bubble-radius-tail);
+}
+.w-msg--out .w-msg__meta { text-align: right; }
+
+/* --- a draft: an outgoing bubble that has not happened yet ----------------- */
+.w-msg--draft { align-items: flex-end; }
+.w-msg--draft .w-msg__bubble {
+  background: var(--w-bubble-draft-bg); color: var(--w-bubble-draft-fg);
+  border: 1px dashed var(--w-bubble-draft-border);
+  border-bottom-right-radius: var(--w-bubble-radius-tail);
+  transition: background-color var(--w-duration-bubble) var(--w-ease-standard),
+              color var(--w-duration-bubble) var(--w-ease-standard),
+              border-color var(--w-duration-quick) var(--w-ease-standard);
+}
+.w-msg--draft .w-msg__meta { text-align: right; }
+
+/* approved: the shape you agreed to becomes the shape that went out */
+.w-msg--draft.is-approved .w-msg__bubble {
+  background: var(--w-bubble-out-bg); color: var(--w-bubble-out-fg);
+  border: 1px solid var(--w-bubble-out-bg);
+}
+
+/* --- states --------------------------------------------------------------- */
+.w-msg--sending .w-msg__bubble { opacity: 0.6; }
+.w-msg--failed .w-msg__bubble { border-left: 3px solid var(--w-status-critical-strong); }
+.w-msg--failed .w-msg__meta { color: var(--w-status-critical-strong); }
+
+/* --- inline actions: three maximum, every one carries a word --------------- */
+.w-msg-actions {
+  display: flex; flex-wrap: wrap; gap: var(--w-space-2);
+  margin-top: var(--w-space-2);
+}
+.w-msg--out + .w-msg-actions, .w-msg--draft + .w-msg-actions { justify-content: flex-end; }
+
+/* the draft's decision, full width, below the thread position */
+.w-decision { display: flex; flex-direction: column; gap: var(--w-space-2); margin-top: var(--w-space-4); }
+
+/* ==========================================================================
+   WERKS'S RAIL
+   Werks gets no bubble. It is not a participant, it is the surface.
+   ========================================================================== */
+
+.w-werks {
+  display: flex; gap: var(--w-rail-gap);
+  margin-top: var(--w-turn-gap);
+  max-width: var(--w-max-content);
+}
+.w-werks__mark {
+  flex: 0 0 var(--w-rail-w);
+  display: flex; flex-direction: column; align-items: center;
+  padding-top: 0.45em;   /* optical: the dot sits on the first line's x-height */
+}
+/* the hairline is the rail. Present when Werks is reporting, not acting. */
+.w-werks__mark::after {
+  content: ""; flex: 1; width: 1px; margin-top: var(--w-space-2);
+  background: var(--w-werks-rail);
+}
+.w-werks--single .w-werks__mark::after { display: none; }
+.w-werks__body { flex: 1; min-width: 0; }
+.w-werks__text {
+  margin: 0; font-size: var(--w-text-md); line-height: var(--w-leading-normal);
+  color: var(--w-werks-fg);
+}
+.w-werks__meta { margin: var(--w-space-1) 0 0; font-size: var(--w-text-xs); color: var(--w-werks-meta); }
+
+/* ==========================================================================
+   THE QUIET BLOCK
+   Werks handled it and needed nobody. Collapsible, never lossy.
+   ========================================================================== */
+
+.w-quiet {
+  margin: var(--w-turn-gap-block) 0;
+  padding-left: var(--w-quiet-inset);
+  border-left: 1px solid var(--w-quiet-rule);
+}
+.w-quiet__summary {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--w-space-3);
+  width: 100%; min-height: var(--w-control-md); padding: var(--w-space-2) 0;
+  background: none; border: 0; cursor: pointer; text-align: left;
+  font: inherit; font-size: var(--w-text-sm); color: var(--w-quiet-fg);
+}
+.w-quiet__count { font-weight: var(--w-weight-medium); }
+.w-quiet__when { display: block; font-size: var(--w-text-xs); color: var(--w-quiet-fg); }
+.w-quiet__chev {
+  transition: transform var(--w-duration-collapse) var(--w-ease-standard);
+  color: var(--w-quiet-fg);
+}
+.w-quiet[open] .w-quiet__chev, .w-quiet.is-open .w-quiet__chev { transform: rotate(90deg); }
+
+.w-quiet__panel {
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows var(--w-duration-collapse) var(--w-ease-standard);
+}
+.w-quiet.is-open .w-quiet__panel { grid-template-rows: 1fr; }
+.w-quiet__panel > * { overflow: hidden; }
+
+/* ==========================================================================
+   THE DOT, ALIVE
+   Five states, one shape. Absence is a state: no dot means Werks is off.
+   ========================================================================== */
+
+.w-dot--ambient  { opacity: var(--w-ambient-opacity); }
+
+.w-dot--thinking {
+  width: var(--w-dot-thinking); height: var(--w-dot-thinking);
+  animation: w-breathe var(--w-duration-breath) var(--w-ease-breath) infinite;
+}
+.w-dot--speaking {
+  width: var(--w-dot-speaking); height: var(--w-dot-speaking);
+  animation: w-breathe var(--w-duration-breath) var(--w-ease-breath) infinite;
+}
+/* background work: a ring. Out on an errand, and it never moves. */
+.w-dot--working {
+  width: var(--w-dot-ring-size); height: var(--w-dot-ring-size);
+  box-sizing: border-box; background: transparent;
+  border: var(--w-dot-ring-width) solid var(--w-signal);
+}
+
+@keyframes w-breathe {
+  0%, 100% { transform: scale(var(--w-breath-scale-min)); opacity: var(--w-breath-opacity-min); }
+  50%      { transform: scale(var(--w-breath-scale-max)); opacity: 1; }
+}
+@keyframes w-arrive {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes w-word {
+  from { opacity: 0; transform: translateY(2px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* what is in flight. Facts, ages, no progress bars. */
+.w-tracking { list-style: none; margin: 0; padding: 0; }
+.w-tracking__row {
+  display: flex; align-items: center; gap: var(--w-space-3);
+  min-height: var(--w-control-md); padding: var(--w-space-2) 0;
+  border-bottom: 1px solid var(--w-border-subtle);
+  font-size: var(--w-text-base);
+}
+.w-tracking__row:last-child { border-bottom: 0; }
+.w-tracking__what { flex: 1; min-width: 0; }
+.w-tracking__when { font-size: var(--w-text-sm); color: var(--w-text-secondary); }
+
+/* ==========================================================================
+   VOICE — TRANSCRIPT, SPEECH, OPTIONS
+   ========================================================================== */
+
+/* the mic dock's presence marker */
+.w-mic { position: relative; }
+.w-mic__dot { position: absolute; top: 10px; right: 10px; }
+.w-mic--armed { transform: scale(1.125); transition: transform var(--w-duration-instant) var(--w-ease-standard); }
+
+/* --- live transcript: the owner's own words, arriving --------------------- */
+.w-transcript {
+  font-size: var(--w-text-md); line-height: var(--w-leading-normal);
+  color: var(--w-text-primary);
+}
+.w-transcript__word {
+  /* inline-block so it can be translated; the space between words has to be
+     re-created because an inline-block eats its own trailing whitespace. */
+  display: inline-block; margin-right: 0.26em;
+  animation: w-word var(--w-duration-word) var(--w-ease-arrive) both;
+}
+/* not yet committed by the recogniser */
+.w-transcript__word--interim { color: var(--w-text-secondary); }
+/* the caret moves rather than blinks: movement is the proof */
+.w-transcript__caret {
+  display: inline-block; width: 2px; height: 1.1em; vertical-align: text-bottom;
+  margin-left: 2px; background: var(--w-signal);
+}
+
+/* a word the recogniser is not sure about. Never a colour, never a fill. */
+.w-uncertain {
+  background: none; border: 0; padding: 0 1px; cursor: pointer;
+  font: inherit; color: inherit;
+  border-bottom: 1px dashed var(--w-bubble-draft-border);
+}
+.w-uncertain:hover { background: var(--w-bg-hover); }
+
+/* --- Werks reading something aloud ---------------------------------------- */
+.w-speak__text { font-size: var(--w-text-md); line-height: var(--w-leading-normal); margin: 0; }
+.w-speak__word { transition: color var(--w-duration-word) var(--w-ease-standard); }
+.w-speak__word--ahead  { color: var(--w-text-secondary); }
+.w-speak__word--spoken { color: var(--w-text-primary); }
+.w-speak__controls {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--w-space-3); margin-top: var(--w-space-3);
+}
+
+/* --- say it or tap it ------------------------------------------------------ */
+.w-options { display: flex; flex-direction: column; margin: var(--w-space-3) 0 0;
+  border: 1px solid var(--w-border-default); border-radius: var(--w-radius-md); overflow: hidden; }
+.w-options[hidden] { display: none; }
+.w-option {
+  display: flex; align-items: center; gap: var(--w-space-3);
+  min-height: var(--w-control-lg); padding: var(--w-space-3) var(--w-space-4);
+  background: var(--w-bg-surface); border: 0;
+  border-bottom: 1px solid var(--w-border-subtle);
+  cursor: pointer; text-align: left;
+  font: inherit; font-size: var(--w-text-md); color: var(--w-text-primary);
+  animation: w-arrive var(--w-duration-bubble) var(--w-ease-arrive) both;
+}
+.w-option:last-child { border-bottom: 0; }
+.w-option:hover { background: var(--w-bg-hover); }
+.w-option:nth-child(2) { animation-delay: var(--w-stagger-option); }
+.w-option:nth-child(3) { animation-delay: calc(var(--w-stagger-option) * 2); }
+.w-option:nth-child(4) { animation-delay: calc(var(--w-stagger-option) * 3); }
+.w-hint { margin: var(--w-space-2) 0 0; font-size: var(--w-text-sm); color: var(--w-text-secondary); }
+
+/* ==========================================================================
+   MULTI-TURN — the working card
+   A receipt of what Werks currently believes. Not a form.
+   ========================================================================== */
+
+.w-working {
+  background: var(--w-bg-sunken); border: 1px solid var(--w-border-subtle);
+  border-radius: var(--w-radius-lg); padding: var(--w-space-4);
+}
+.w-working__label { margin-bottom: var(--w-space-2); }
+.w-working__fact {
+  display: block; width: 100%; padding: var(--w-space-1) 0;
+  background: none; border: 0; text-align: left; cursor: pointer;
+  font: inherit; font-size: var(--w-text-md); color: var(--w-text-primary);
+  animation: w-arrive var(--w-duration-bubble) var(--w-ease-arrive) both;
+}
+.w-working__source { font-size: var(--w-text-sm); color: var(--w-text-secondary); }
+.w-working__missing {
+  margin: var(--w-space-3) 0 0; padding-top: var(--w-space-3);
+  border-top: 1px solid var(--w-border-subtle);
+  font-size: var(--w-text-sm); color: var(--w-text-secondary);
+}
+
+/* ==========================================================================
+   NUDGE — Werks starting the conversation. Always with a draft attached.
+   ========================================================================== */
+
+.w-nudge { background: var(--w-bg-surface); border: 1px solid var(--w-border-subtle);
+  border-radius: var(--w-radius-lg); padding: var(--w-space-5); box-shadow: var(--w-elevation-card); }
+.w-nudge__head { display: flex; align-items: baseline; gap: var(--w-space-3); }
+.w-nudge__title { font-family: var(--w-font-display); font-size: var(--w-text-lg);
+  font-weight: var(--w-weight-semibold); letter-spacing: var(--w-tracking-snug); margin: 0; }
+.w-nudge__actions { display: flex; flex-direction: column; gap: var(--w-space-2); margin-top: var(--w-space-5); }
+
+/* ==========================================================================
+   ESCALATION — the one state with zero motion.
+   ========================================================================== */
+
+.w-stop {
+  border-left: 4px solid var(--w-status-critical-strong);
+  background: var(--w-bg-surface);
+  border-radius: 0 var(--w-radius-lg) var(--w-radius-lg) 0;
+  padding: var(--w-space-5);
+}
+.w-stop__title {
+  font-family: var(--w-font-display); font-size: var(--w-text-2xl); font-weight: var(--w-weight-bold);
+  letter-spacing: var(--w-tracking-tight); color: var(--w-status-critical-fg); margin: 0 0 var(--w-space-3);
+}
+.w-stop__body { margin: 0; font-size: var(--w-text-md); line-height: var(--w-leading-normal);
+  color: var(--w-text-primary); }
+/* the number is in the button, so it can be dialled from another phone */
+.w-stop__call { margin-top: var(--w-space-5); flex-direction: column; gap: 2px; line-height: 1.2; }
+.w-stop__number { font-variant-numeric: tabular-nums; font-weight: var(--w-weight-medium); opacity: 0.85; }
+.w-stop, .w-stop * { animation: none !important; }
+
+/* ==========================================================================
+   NEWS — something happened while you were out
+   ========================================================================== */
+
+.w-news { display: flex; flex-direction: column; gap: var(--w-space-4); }
+.w-news__head { display: flex; align-items: center; gap: var(--w-space-3); }
+.w-news__item {
+  font-family: var(--w-font-display); font-size: var(--w-text-lg);
+  font-weight: var(--w-weight-semibold); line-height: 1.35;
+  letter-spacing: var(--w-tracking-snug); margin: 0;
+  animation: w-arrive var(--w-duration-bubble) var(--w-ease-arrive) both;
+}
+.w-news__item:nth-of-type(2) { animation-delay: var(--w-stagger-bubble); }
+
+/* ==========================================================================
+   OFF — the only screen with no Dot on it. That absence is the design.
+   ========================================================================== */
+
+.w-sleep {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; gap: var(--w-space-2);
+  min-height: 22rem; padding: var(--w-space-12) var(--w-space-5);
+  background: var(--w-sleep-bg); color: var(--w-sleep-fg);
+  border-radius: var(--w-radius-lg);
+}
+.w-sleep__title { font-family: var(--w-font-display); font-size: var(--w-text-lg);
+  font-weight: var(--w-weight-semibold); margin: 0; }
+.w-sleep__body { margin: 0; max-width: 20rem; font-size: var(--w-text-md); color: var(--w-sleep-fg-2); }
+.w-sleep__wake {
+  margin-top: var(--w-space-6); min-height: var(--w-control-md); padding: 0 var(--w-space-5);
+  border-radius: var(--w-radius-md); cursor: pointer;
+  background: transparent; border: 1px solid var(--w-sleep-border); color: var(--w-sleep-fg);
+  font: inherit; font-weight: var(--w-weight-medium);
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   Every state here is knowable without movement. Nothing is lost.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .w-dot--thinking, .w-dot--speaking {
+    animation: none;
+    transform: none; opacity: 1;
+    width: var(--w-dot-thinking); height: var(--w-dot-thinking);
+  }
+  .w-msg__bubble, .w-option, .w-news__item, .w-working__fact,
+  .w-transcript__word, .w-newpill { animation: none; opacity: 1; transform: none; }
+  .w-quiet__chev { transition: none; }
+  /* the read-along highlight is colour, not motion. It is retained. */
+}
