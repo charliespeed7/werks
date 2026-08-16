@@ -7,11 +7,11 @@
 
 ## 1. The Opportunity
 
-2 billion people work in the informal economy. 60% of the world's workforce. They run trade businesses on phones, WhatsApp, paper diaries, and memory. Nobody serves them with software.
+2 billion people work in the informal economy. 60% of the world's workforce. They run trade businesses on phones, messaging apps, paper diaries, and memory. Nobody serves them with software.
 
-In the UK and US, trades businesses use spreadsheets or nothing. In Brazil and Africa, they run on WhatsApp and cash. The tools that exist — Jobber, Housecall Pro, Commusoft — are built for businesses that already think of themselves as businesses. They don't reach the plumber who runs everything from his phone and has never used software.
+In the UK and US, trades businesses use spreadsheets or nothing. In Brazil and Africa, they run on messaging apps and cash. The tools that exist — Jobber, Housecall Pro, Commusoft — are built for businesses that already think of themselves as businesses. They don't reach the plumber who runs everything from his phone and has never used software.
 
-**WERKS is a phone-first, voice-first AI operating layer for small service businesses.** It lives where the owner lives — on their phone. It answers calls, captures leads, drafts quotes, sends invoices, chases payment, manages bookings, and remembers every customer and every appliance. The owner speaks in outcomes; WERKS maps them to agents.
+**WERKS is a phone-first, voice-first AI operating layer for small service businesses.** It lives where the owner lives — on their phone, in their messaging apps, on a call. It answers calls, captures leads, drafts quotes, sends invoices, chases payment, manages bookings, and remembers every customer and every appliance. The owner speaks in outcomes; WERKS maps them to agents.
 
 **The moat is not the AI. It's the context layer** — memory, customer database, scheduling, and wallet. Agents commoditise over time. The context layer doesn't. When someone builds the best estimation agent on the planet, it still runs on our customer graph and pays through our wallet.
 
@@ -39,13 +39,11 @@ In the UK and US, trades businesses use spreadsheets or nothing. In Brazil and A
 | **Brazil** | 20M | 30% of GDP | Yes, dominant | £6 | £1.4B |
 | **Africa** | 24M | 55-80% of GDP | Yes, dominant | £4 | £1.2B |
 
-### The thesis
-
-The informal economy is the white space. In the UK and US, trades businesses use spreadsheets, paper, or nothing. In Brazil and Africa, they run on WhatsApp and cash. Nobody serves either.
+The informal economy is the white space. In the UK and US, trades businesses use spreadsheets, paper, or nothing. In Brazil and Africa, they run on messaging apps and cash. Nobody serves either.
 
 WERKS starts in the UK (highest ARPU, clearest regulation, Gas Safe wedge). The same product, repriced and localised, reaches Brazil and Africa where WhatsApp is already the operating system for informal business.
 
-**The WhatsApp angle is the key.** In emerging markets, WhatsApp IS the internet for small business. WERKS doesn't ask them to download an app. It meets them where they already are. That's the distribution unlock.
+**The messaging angle is the key.** In emerging markets, messaging apps ARE the internet for small business. WERKS doesn't ask them to download an app. It meets them where they already are — WhatsApp, Telegram, Signal, or whatever they already use. That's the distribution unlock.
 
 ### Why now
 
@@ -156,7 +154,7 @@ Worcester Bosch, Vaillant, Baxi directories = exact ICP.
 
 1. Dedicated business phone number
 2. AI call answering and lead capture
-3. SMS and WhatsApp support
+3. SMS and messaging app support (WhatsApp, Telegram, Signal)
 4. Calendar and booking management
 5. Quote drafting and acceptance follow-up
 6. Invoice drafting and payment chasing
@@ -167,7 +165,7 @@ Worcester Bosch, Vaillant, Baxi directories = exact ICP.
 ### Product principles
 
 - Phone-first, voice-first where valuable
-- WhatsApp-native
+- WhatsApp-native, messaging-app native
 - Low setup effort, useful within first hour
 - Calm and simple, proactive not noisy
 - Transparent about what happened
@@ -212,8 +210,8 @@ The architecture stays vertical-agnostic. But GTM stays focused on gas engineers
 | Market | Why | Entry strategy |
 |---|---|---|
 | **US** | 3.5M trades, highest ARPU after UK, growing demand | Localise for US trades, voice-first |
-| **Brazil** | 20M informal trades, 30% informal economy, WhatsApp dominant | Reprice at $6-8/mo, WhatsApp-native |
-| **Africa** | 24M informal trades, 55-80% informal economy, WhatsApp dominant | Reprice at $4-5/mo, WhatsApp-native |
+| **Brazil** | 20M informal trades, 30% informal economy, messaging apps dominant | Reprice at $6-8/mo, messaging-native |
+| **Africa** | 24M informal trades, 55-80% informal economy, messaging apps dominant | Reprice at $4-5/mo, messaging-native |
 
 ---
 
