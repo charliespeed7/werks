@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Werks — Investor Pack</title>
-<meta name="description" content="Werks investor pack. The phone-first AI operating layer for the two billion people who work for themselves.">
+<meta name="description" content="Werks investor pack. A phone-first AI operating layer for small service businesses, and the two billion informal workers nobody serves.">
 
 <!-- Preview only. Production self-hosts these as woff2 subsets. See foundations/02-typography.md -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +52,6 @@ body { overflow-x: hidden; }
 /* -------------------------------------------------- the slide ------------- */
 .slide {
   position: relative;
-  box-sizing: border-box;
   width: 100vw;
   min-height: 100svh;
   height: 100svh;
@@ -65,7 +64,6 @@ body { overflow-x: hidden; }
   padding: var(--d-pad-y) var(--d-pad-x) calc(var(--d-pad-y) + var(--d-rail));
   background: var(--w-bg-canvas);
   color: var(--w-text-primary);
-  border-top: 1px solid transparent;
 }
 .slide__inner { width: 100%; max-width: var(--d-measure); margin: 0 auto; }
 
@@ -86,10 +84,6 @@ body { overflow-x: hidden; }
   --w-border-control: var(--w-dk-border-hi);
   --w-border-strong:  var(--w-dk-text);
   --w-signal-text:    var(--w-volt-500);
-  --w-status-neutral-bg: var(--w-dk-raised);
-  --w-status-neutral-fg: var(--w-dk-text);
-  --w-action-primary-bg: var(--w-paper-50);
-  --w-action-primary-fg: var(--w-ink-900);
   --w-elevation-card: none;
   color-scheme: dark;
 }
@@ -146,14 +140,12 @@ body { overflow-x: hidden; }
 }
 .d-lede strong { color: var(--w-text-primary); font-weight: var(--w-weight-semibold); }
 .d-body { font-size: var(--d-body); line-height: var(--w-leading-relaxed); margin: 0; }
-.d-body--secondary { color: var(--w-text-secondary); }
 .d-small { font-size: var(--d-small); line-height: var(--w-leading-normal); color: var(--w-text-secondary); margin: 0; }
 .d-quote {
   font-family: var(--w-font-editorial); font-weight: 500;
   font-size: clamp(1.25rem, 2.6vw, 2.125rem); line-height: 1.2;
   letter-spacing: var(--w-tracking-tight); margin: 0; max-width: 26ch;
 }
-.d-mono { font-family: var(--w-font-mono); font-variant-numeric: tabular-nums; }
 .d-accent { color: var(--w-signal-text); }
 
 /* -------------------------------------------------- layout helpers -------- */
@@ -169,7 +161,6 @@ body { overflow-x: hidden; }
   .d-split--wide-l  { grid-template-columns: 1.25fr 1fr; }
   .d-split--wide-r  { grid-template-columns: 1fr 1.35fr; }
   .d-grid--2 { grid-template-columns: repeat(2, 1fr); }
-  .d-grid--3 { grid-template-columns: repeat(3, 1fr); }
   .d-grid--4 { grid-template-columns: repeat(4, 1fr); }
 }
 
@@ -180,7 +171,6 @@ body { overflow-x: hidden; }
   background: var(--w-bg-surface);
   display: flex; flex-direction: column; gap: var(--w-space-2);
 }
-.d-panel--flat { background: transparent; }
 .d-panel--rule {
   border: 0; border-top: 2px solid var(--w-border-strong);
   border-radius: 0; padding: var(--w-space-4) 0 0; background: transparent;
@@ -219,8 +209,6 @@ body { overflow-x: hidden; }
 }
 .d-list li:last-child { border-bottom: 0; }
 .d-list__n { font-family: var(--w-font-mono); font-size: var(--w-text-xs); color: var(--w-text-tertiary); }
-.d-list--dotted li { grid-template-columns: 0.75rem 1fr; align-items: start; }
-.d-list--dotted .d-list__n { padding-top: 0.55em; }
 
 /* -------------------------------------------------- table ----------------- */
 .d-table { width: 100%; border-collapse: collapse; font-size: var(--d-body); }
@@ -258,32 +246,19 @@ body { overflow-x: hidden; }
   .d-table td:first-child { font-size: var(--w-text-lg); padding-bottom: var(--w-space-2); }
 }
 
-/* -------------------------------------------------- lifecycle bar --------- */
-.d-line { display: grid; gap: 3px; grid-template-columns: repeat(3, 1fr); }
-@media (min-width: 46rem) { .d-line { grid-template-columns: repeat(9, 1fr); } }
-.d-step {
-  border-radius: var(--w-radius-xs);
-  padding: var(--w-space-3) var(--w-space-2);
-  min-height: 5.5rem;
-  display: flex; flex-direction: column; justify-content: space-between; gap: var(--w-space-2);
-  font-size: var(--w-text-xs); line-height: 1.25;
+/* -------------------------------------------------- channel strip -------- */
+.d-channels { display: flex; flex-wrap: wrap; gap: var(--w-space-2); align-items: center; }
+.d-channel {
+  display: inline-flex; align-items: center; gap: var(--w-space-2);
+  border: 1px solid var(--w-border-default); border-radius: var(--w-radius-full);
+  padding: var(--w-space-2) var(--w-space-4);
+  font-size: var(--d-small); color: var(--w-text-secondary); white-space: nowrap;
 }
-.d-step__n { font-family: var(--w-font-mono); font-size: var(--w-text-2xs); opacity: 0.7; }
-.d-step--taken { background: var(--w-bg-inverse); color: var(--w-text-inverse); }
-.slide--ink .d-step--taken { background: var(--w-dk-raised); color: var(--w-dk-text); }
-.d-step--open  { border: 1px dashed var(--w-border-control); color: var(--w-text-primary); }
-.d-step--ours  { background: var(--w-ink-900); color: var(--w-paper-50); position: relative; }
-.d-step--ours .d-dot-abs { position: absolute; top: var(--w-space-3); right: var(--w-space-3); }
-
-.d-bracket {
-  display: grid; gap: 3px; grid-template-columns: 1fr; margin-top: var(--w-space-3);
+.d-channel--lead {
+  border-color: var(--w-border-strong); color: var(--w-text-primary);
+  font-weight: var(--w-weight-semibold); padding-left: var(--w-space-2);
 }
-@media (min-width: 46rem) { .d-bracket { grid-template-columns: 3fr 5fr 1fr; } }
-.d-bracket span {
-  font-size: var(--w-text-2xs); letter-spacing: var(--w-tracking-widest);
-  text-transform: uppercase; color: var(--w-text-secondary);
-  border-top: 1px solid var(--w-border-default); padding-top: var(--w-space-2);
-}
+.d-channel--any { border-style: dashed; color: var(--w-text-tertiary); }
 
 /* -------------------------------------------------- circles --------------- */
 .d-circles { width: 100%; max-width: 30rem; height: auto; display: block; margin: 0 auto; }
@@ -300,74 +275,6 @@ body { overflow-x: hidden; }
 .d-legend { display: flex; flex-direction: column; gap: var(--w-space-5); }
 .d-legend__row { display: grid; grid-template-columns: 1.25rem 1fr; gap: var(--w-space-4); align-items: start; }
 .d-legend__key { width: 1rem; height: 1rem; border-radius: var(--w-radius-xs); margin-top: 0.75rem; }
-
-/* -------------------------------------------------- channel strip -------- */
-.d-channels { display: flex; flex-wrap: wrap; gap: var(--w-space-2); align-items: center; }
-.d-channel {
-  display: inline-flex; align-items: center; gap: var(--w-space-2);
-  border: 1px solid var(--w-border-default); border-radius: var(--w-radius-full);
-  padding: var(--w-space-2) var(--w-space-4);
-  font-size: var(--d-small); color: var(--w-text-secondary); white-space: nowrap;
-}
-.d-channel--lead {
-  border-color: var(--w-border-strong); color: var(--w-text-primary);
-  font-weight: var(--w-weight-semibold); padding-left: var(--w-space-2);
-}
-.d-channel--any { border-style: dashed; color: var(--w-text-tertiary); }
-
-/* -------------------------------------------------- architecture ---------- */
-.d-agents { display: flex; flex-wrap: wrap; gap: var(--w-space-2); justify-content: center; }
-.d-agent {
-  border: 1px dashed var(--w-border-control); border-radius: var(--w-radius-full);
-  padding: var(--w-space-2) var(--w-space-4); font-size: var(--d-small);
-  color: var(--w-text-secondary); white-space: nowrap;
-}
-.d-wires { display: block; width: 100%; height: 2.5rem; }
-.d-core {
-  background: var(--w-ink-900); color: var(--w-paper-50);
-  border-radius: var(--w-radius-lg); padding: clamp(var(--w-space-4), 2.2vw, var(--w-space-6));
-}
-.slide--ink .d-core { background: var(--w-dk-raised); color: var(--w-dk-text); }
-.d-core__head { display: flex; align-items: center; gap: var(--w-space-3); margin-bottom: var(--w-space-5); }
-.d-core__title {
-  font-family: var(--w-font-display); font-weight: var(--w-weight-bold);
-  letter-spacing: var(--w-tracking-tight); font-size: var(--w-text-lg);
-}
-.d-pillars { display: grid; gap: var(--w-space-3); grid-template-columns: repeat(2, 1fr); }
-@media (min-width: 46rem) { .d-pillars { grid-template-columns: repeat(4, 1fr); } }
-.d-pillar {
-  border: 1px solid rgba(245, 243, 239, 0.16); border-radius: var(--w-radius-md);
-  padding: var(--w-space-3) var(--w-space-4);
-}
-.d-pillar h4 {
-  font-family: var(--w-font-display); font-size: var(--w-text-base);
-  font-weight: var(--w-weight-semibold); margin: 0 0 4px;
-}
-.d-pillar p { font-size: var(--w-text-xs); line-height: 1.4; margin: 0; color: var(--w-paper-400); }
-
-/* -------------------------------------------------- pricing --------------- */
-.d-tier {
-  border: 1px solid var(--w-border-subtle); border-radius: var(--w-radius-lg);
-  padding: clamp(var(--w-space-4), 2vw, var(--w-space-6));
-  display: flex; flex-direction: column; gap: var(--w-space-3);
-}
-.d-tier--lead { background: var(--w-ink-900); color: var(--w-paper-50); border-color: var(--w-ink-900); }
-.d-tier--lead .d-stat__label, .d-tier--lead .d-small { color: var(--w-paper-400); }
-.slide--ink .d-tier--lead { background: var(--w-dk-raised); color: var(--w-dk-text); border-color: var(--w-dk-border); }
-
-/* -------------------------------------------------- steps / GTM ----------- */
-.d-phase {
-  display: grid; grid-template-columns: auto 1fr; gap: var(--w-space-4);
-  padding: clamp(0.6rem, 1.6vh, 1.1rem) 0; border-top: 1px solid var(--w-border-subtle);
-}
-.d-phase:first-child { border-top: 0; }
-.d-phase__no {
-  font-family: var(--w-font-display); font-weight: var(--w-weight-black);
-  font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1;
-  letter-spacing: var(--w-tracking-tighter); color: var(--w-text-tertiary);
-  font-variant-numeric: tabular-nums; min-width: 2.5ch;
-}
-.d-phase--now .d-phase__no { color: var(--w-text-primary); }
 
 /* -------------------------------------------------- title + closing ------- */
 .d-title-wordmark {
@@ -446,7 +353,7 @@ body { overflow-x: hidden; }
     <h1 class="d-title-wordmark">Werks<span class="stop">.</span></h1>
     <div class="d-stack" style="max-width:44ch">
       <p class="d-lede" style="color:var(--w-dk-text)">
-        The phone-first AI operating layer for the <strong>two billion people</strong> who work for themselves.
+        A <strong>phone-first AI operating layer</strong> for small service businesses.
       </p>
       <hr class="d-rule">
       <p class="d-small">
@@ -456,7 +363,7 @@ body { overflow-x: hidden; }
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════ 02 · PROBLEM -->
+<!-- ═══════════════════════════════════════════════════ 02 · THE PROBLEM -->
 <section class="slide" id="s2" aria-label="The problem">
   <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
   <div class="slide__inner">
@@ -476,7 +383,7 @@ body { overflow-x: hidden; }
           <p class="d-body"><strong>Brazil &amp; Africa.</strong> Businesses run on messaging apps and cash.</p>
         </div>
         <div class="d-panel d-panel--rule">
-          <p class="d-body"><strong>The tools that exist</strong> — Jobber, Housecall Pro, Commusoft — are built for businesses that already think of themselves as businesses.</p>
+          <p class="d-body"><strong>The tools that exist</strong> are built for businesses that already think of themselves as businesses.</p>
           <p class="d-small" style="margin-top:var(--w-space-2)">They never reach the plumber who runs everything from his phone and has never used software.</p>
         </div>
       </div>
@@ -484,17 +391,17 @@ body { overflow-x: hidden; }
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════ 03 · PRODUCT -->
+<!-- ═══════════════════════════════════════════════════ 03 · THE PRODUCT -->
 <section class="slide" id="s3" aria-label="The product">
   <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
   <div class="slide__inner">
     <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">02 — The product</span></div>
     <div class="d-split d-split--wide-r">
       <div class="d-stack">
-        <h2 class="d-h1">A phone-first AI operating layer for small service businesses.</h2>
+        <h2 class="d-h1">A phone-first, voice-first AI operating layer.</h2>
         <p class="d-lede">It lives where the owner lives — on a call, in whichever messaging app they already have open. The owner speaks in outcomes; Werks maps them to agents.</p>
-        <p class="d-quote" style="margin-top:var(--w-space-4)">Voice-first, messaging-agnostic, useful inside the first hour.</p>
-        <div class="d-channels" style="margin-top:var(--w-space-5)">
+        <p class="d-quote" style="margin-top:var(--w-space-4)">We meet them where they already are.</p>
+        <div class="d-channels" style="margin-top:var(--w-space-4)">
           <span class="d-channel d-channel--lead"><span class="d-mark"><span class="w-dot"></span></span>Voice</span>
           <span class="d-channel">Phone call</span>
           <span class="d-channel">SMS</span>
@@ -519,48 +426,11 @@ body { overflow-x: hidden; }
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════ 04 · MOAT -->
-<section class="slide slide--ink" id="s4" aria-label="The moat">
+<!-- ═══════════════════════════════════════════════════ 04 · MARKET SIZING -->
+<section class="slide" id="s4" aria-label="Market sizing">
   <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
   <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">03 — The moat</span></div>
-    <div class="d-split">
-      <div class="d-stack">
-        <h2 class="d-h1">The moat is not the AI. It's the context layer.</h2>
-        <p class="d-lede">Agents commoditise over time. The context layer doesn't.</p>
-        <p class="d-quote d-accent" style="margin-top:var(--w-space-4)">When someone builds the best estimation agent on the planet, it still runs on our customer graph and pays through our wallet.</p>
-      </div>
-      <div class="d-grid d-grid--2">
-        <div class="d-panel">
-          <span class="d-panel__n">01</span>
-          <h3 class="d-h2">Memory</h3>
-          <p class="d-small">What Werks knows about the business, its customers, and every appliance it has touched.</p>
-        </div>
-        <div class="d-panel">
-          <span class="d-panel__n">02</span>
-          <h3 class="d-h2">Customers</h3>
-          <p class="d-small">The relationship graph. Who they are, what they own, when they last called.</p>
-        </div>
-        <div class="d-panel">
-          <span class="d-panel__n">03</span>
-          <h3 class="d-h2">Scheduling</h3>
-          <p class="d-small">The calendar and the recurring cadence engine that drives repeat revenue.</p>
-        </div>
-        <div class="d-panel">
-          <span class="d-panel__n">04</span>
-          <h3 class="d-h2">Wallet</h3>
-          <p class="d-small">Payments in, and payments out to third parties on the owner's behalf.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ 05 · MARKET SIZING -->
-<section class="slide" id="s5" aria-label="Market sizing">
-  <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
-  <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">04 — Market sizing</span></div>
+    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">03 — Market sizing</span></div>
     <div class="d-split">
       <svg class="d-circles" viewBox="0 0 460 460" role="img" aria-label="Concentric circles: TAM fifteen billion pounds, SAM three point six billion pounds, SOM eighteen million pounds">
         <circle class="c-tam" cx="230" cy="230" r="222"/>
@@ -601,12 +471,12 @@ body { overflow-x: hidden; }
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════ 06 · MARKET BREAKDOWN -->
-<section class="slide" id="s6" aria-label="Market breakdown">
+<!-- ═══════════════════════════════════════════════════ 05 · MARKET BREAKDOWN -->
+<section class="slide" id="s5" aria-label="Market breakdown">
   <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
   <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">05 — Market breakdown</span></div>
-    <h2 class="d-h1 d-h1--wide">The informal economy is the white space.</h2>
+    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">04 — Market breakdown</span></div>
+    <h2 class="d-h1 d-h1--wide">Four markets, one product, four price points.</h2>
     <table class="d-table" style="margin-top:var(--w-space-6)">
       <thead>
         <tr>
@@ -648,327 +518,75 @@ body { overflow-x: hidden; }
         </tr>
       </tbody>
     </table>
-    <p class="d-lede" style="margin-top:var(--w-space-6);max-width:56ch">
-      <strong>Messaging and voice are the unlock.</strong> In emerging markets, messaging apps already are the internet for small business. Werks doesn't ask anyone to download an app, and it isn't tied to one network — WhatsApp, Telegram, Signal, SMS, or a phone call. Whatever they already use.
+    <p class="d-small" style="margin-top:var(--w-space-6);max-width:60ch">
+      50 million trade businesses with a smartphone in their pocket. The higher the informal share of an economy, the less software reaches it — and the more of the business already happens in a chat thread.
     </p>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════ 07 · THE WEDGE -->
-<section class="slide slide--ink" id="s7" aria-label="The wedge">
+<!-- ═══════════════════════════════════════════════════ 06 · THE THESIS -->
+<section class="slide slide--ink" id="s6" aria-label="The thesis">
   <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
   <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">06 — The wedge</span></div>
+    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">05 — The thesis</span></div>
     <div class="d-split d-split--wide-l">
       <div class="d-stack">
-        <h2 class="d-h1">UK gas engineers first.</h2>
-        <p class="d-lede">Boiler service is non-negotiable, compliance-driven and recurring. Gas Safe is a natural trust anchor. Highest ARPU market on earth.</p>
-        <div class="d-grid d-grid--2" style="margin-top:var(--w-space-4)">
-          <div>
-            <p class="d-stat d-stat--sm">80,000</p>
-            <p class="d-stat__label">Registered businesses</p>
-          </div>
-          <div>
-            <p class="d-stat d-stat--sm">150,000+</p>
-            <p class="d-stat__label">Engineers</p>
-          </div>
-        </div>
-      </div>
-      <div class="d-stack">
-        <p class="d-small" style="letter-spacing:var(--w-tracking-widest);text-transform:uppercase">The addressable list</p>
-        <table class="d-table">
-          <thead><tr><th>Source</th><th>Size</th><th>Cold email</th></tr></thead>
-          <tbody>
-            <tr><td class="d-table__market">Gas Safe Register</td><td class="num" data-label="Size">80,000</td><td data-label="Cold email">No — terms prohibit</td></tr>
-            <tr><td class="d-table__market">Companies House 43220</td><td class="num" data-label="Size">~22,000</td><td data-label="Cold email">Yes — corporates</td></tr>
-            <tr><td class="d-table__market">Manufacturer schemes</td><td class="num" data-label="Size">5–10,000</td><td data-label="Cold email">Limited</td></tr>
-            <tr><td class="d-table__market">Trade bodies</td><td class="num" data-label="Size">~8,000</td><td data-label="Cold email">Partnership only</td></tr>
-          </tbody>
-        </table>
-        <p class="d-small">The market is countable and self-identifying. Addressable means findable through the register, not emailable as a bulk list — so warm channels carry the rest.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ 08 · COMPETITIVE -->
-<section class="slide" id="s8" aria-label="Competitive landscape">
-  <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
-  <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">07 — Competitive landscape</span></div>
-    <h2 class="d-h1 d-h1--wide">Nobody runs the whole line unattended.</h2>
-    <p class="d-lede" style="margin-bottom:var(--w-space-8)">Twelve AI answering services reviewed across the UK and US. Every one of them stops at lead capture or booking.</p>
-
-    <div class="d-line" role="list">
-      <div class="d-step d-step--taken" role="listitem"><span class="d-step__n">01</span><span>Answer the call</span></div>
-      <div class="d-step d-step--taken" role="listitem"><span class="d-step__n">02</span><span>Capture the lead</span></div>
-      <div class="d-step d-step--taken" role="listitem"><span class="d-step__n">03</span><span>Book the job</span></div>
-      <div class="d-step d-step--open"  role="listitem"><span class="d-step__n">04</span><span>Draft the quote</span></div>
-      <div class="d-step d-step--open"  role="listitem"><span class="d-step__n">05</span><span>Chase acceptance</span></div>
-      <div class="d-step d-step--open"  role="listitem"><span class="d-step__n">06</span><span>Raise the invoice</span></div>
-      <div class="d-step d-step--open"  role="listitem"><span class="d-step__n">07</span><span>Chase payment</span></div>
-      <div class="d-step d-step--open"  role="listitem"><span class="d-step__n">08</span><span>Brief the owner</span></div>
-      <div class="d-step d-step--ours"  role="listitem"><span class="d-dot-abs w-dot"></span><span class="d-step__n">09</span><span>Appliance memory</span></div>
-    </div>
-    <div class="d-bracket">
-      <span>Incumbents shipped</span>
-      <span>Unoccupied — the lifecycle gap</span>
-      <span>Werks only</span>
-    </div>
-
-    <p class="d-lede" style="margin-top:var(--w-space-8);max-width:60ch">
-      <strong>No competitor has appliance-level memory.</strong> Jobber and Housecall Pro hold customer and job history. Neither records <span class="d-mono" style="font-size:0.9em">Worcester Bosch Greenstar 30SI, serial X, installed Y, last serviced Z, next due W</span>.
-    </p>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ 09 · WINDOW -->
-<section class="slide" id="s9" aria-label="The incumbent window">
-  <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
-  <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">08 — The incumbent window</span></div>
-    <div class="d-split">
-      <div class="d-stack">
-        <h2 class="d-h1">Steps 1–3 are closed. Steps 4–8 are open for 12–18 months.</h2>
-        <p class="d-lede">Jobber and Housecall Pro shipped AI call answering in 2025. Neither has taken AI into quoting, invoicing or payment chasing.</p>
-        <div class="d-panel d-panel--rule" style="margin-top:var(--w-space-4)">
-          <p class="d-body"><strong>Our advantage:</strong> the customer who isn't on Jobber or HCP yet — and the appliance memory neither of them has.</p>
-        </div>
-        <p class="d-small">UK price anchor: £45/mo headline, £65–100/mo real. Werks prices above the answering-service anchor.</p>
-      </div>
-      <table class="d-table">
-        <thead><tr><th>Incumbent</th><th>AI status</th><th>What it does</th></tr></thead>
-        <tbody>
-          <tr><td class="d-table__market">Jobber</td><td data-label="Status">Shipped · Aug 2025</td><td data-label="What">24/7 AI phone answering, lead capture, booking</td></tr>
-          <tr><td class="d-table__market">Housecall Pro</td><td data-label="Status">Shipped</td><td data-label="What">24/7 AI call answering, chat, booking</td></tr>
-          <tr><td class="d-table__market">Commusoft</td><td data-label="Status">Shipped</td><td data-label="What">AI email and scheduling outreach. No voice</td></tr>
-          <tr><td class="d-table__market">Simpro</td><td data-label="Status">Shipping · Jul 2026</td><td data-label="What">100+ AI features across three brands</td></tr>
-          <tr><td class="d-table__market">Tradify</td><td data-label="Status">Shipped</td><td data-label="What">AI-assisted writing, not call answering</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ 10 · DISTRIBUTION -->
-<section class="slide" id="s10" aria-label="Distribution">
-  <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
-  <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">09 — Distribution</span></div>
-    <h2 class="d-h1 d-h1--wide">Three routes, sequenced. Gas engineers follow other gas engineers.</h2>
-    <div class="d-grid d-grid--3" style="margin-top:var(--w-space-8)">
-      <div class="d-panel">
-        <span class="d-panel__n">Route 01 · start now</span>
-        <h3 class="d-h2">Trade creators</h3>
-        <p class="d-small">Three test posts with tier-two creators at £200–500 each. Measure CPA, then scale to 10–15 creators.</p>
-        <hr class="d-rule" style="margin:var(--w-space-3) 0">
-        <p class="d-small"><b class="d-mono">£50–200</b> CPA · <b class="d-mono">2–4 weeks</b> lead time</p>
-      </div>
-      <div class="d-panel">
-        <span class="d-panel__n">Route 02 · in parallel</span>
-        <h3 class="d-h2">Trade merchants</h3>
-        <p class="d-small">City Plumbing, Wolseley, Plumbase, PTS. They know every gas engineer by name and by spend.</p>
-        <hr class="d-rule" style="margin:var(--w-space-3) 0">
-        <p class="d-small"><b class="d-mono">£50–200</b> CPA · <b class="d-mono">3–6 months</b> to a national deal</p>
-      </div>
-      <div class="d-panel">
-        <span class="d-panel__n">Route 03 · research</span>
-        <h3 class="d-h2">Manufacturers</h3>
-        <p class="d-small">Worcester Bosch, Vaillant and Baxi installer directories are the exact ICP — 5,000–10,000 accredited.</p>
-        <hr class="d-rule" style="margin:var(--w-space-3) 0">
-        <p class="d-small"><b class="d-mono">£50–300</b> CPA · <b class="d-mono">6+ months</b> partnership</p>
-      </div>
-    </div>
-    <p class="d-lede" style="margin-top:var(--w-space-8);max-width:56ch">Peer credibility is worth more than any ad. Route 1 is the cheapest, fastest test we can run this month.</p>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ 11 · PRINCIPLES -->
-<section class="slide" id="s11" aria-label="Product principles">
-  <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
-  <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">10 — Product principles</span></div>
-    <div class="d-split d-split--wide-r">
-      <div class="d-stack">
-        <h2 class="d-h1">Calm, and accountable for every word that goes out.</h2>
-        <p class="d-lede">A gas engineer, one hand, gloves on, in a driveway in June, on a four-year-old Android, with fifteen seconds and no signal.</p>
-      </div>
-      <ul class="d-list d-list--dotted">
-        <li><span class="d-list__n">—</span><span>Phone-first. Voice is a first-class channel, not a demo.</span></li>
-        <li><span class="d-list__n">—</span><span>Messaging-agnostic. WhatsApp, Telegram, Signal, SMS — we meet them there.</span></li>
-        <li><span class="d-list__n">—</span><span>Low setup effort. Useful within the first hour.</span></li>
-        <li><span class="d-list__n">—</span><span>Calm and simple. Proactive, never noisy.</span></li>
-        <li><span class="d-list__n">—</span><span>Transparent about what actually happened.</span></li>
-        <li><span class="d-list__n">—</span><span>Safe by default. Human approval where risk is material.</span></li>
-        <li><span class="d-list__n">—</span><span>Every action auditable.</span></li>
-        <li><span class="d-list__n">—</span><span>Revenue and time saved matter more than feature usage.</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ 12 · ARCHITECTURE -->
-<section class="slide slide--ink" id="s12" aria-label="Architecture">
-  <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
-  <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">11 — Architecture</span></div>
-    <h2 class="d-h1 d-h1--wide" style="margin-bottom:var(--w-space-8)">Werks is the orchestrator. Agents plug in.</h2>
-
-    <div class="d-agents">
-      <span class="d-agent">Estimation agent</span>
-      <span class="d-agent">Invoicing agent</span>
-      <span class="d-agent">Rebooking agent</span>
-      <span class="d-agent">Compliance agent</span>
-      <span class="d-agent">Third-party agents</span>
-    </div>
-
-    <svg class="d-wires" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M100 0 V18 H900 V0 M500 18 V40" fill="none" stroke="var(--w-dk-border-hi)" stroke-width="1"/>
-      <path d="M300 0 V18 M700 0 V18" fill="none" stroke="var(--w-dk-border-hi)" stroke-width="1"/>
-    </svg>
-
-    <div class="d-core">
-      <div class="d-core__head">
-        <span class="w-dot w-dot--lg"></span>
-        <span class="d-core__title">The context layer</span>
-      </div>
-      <div class="d-pillars">
-        <div class="d-pillar"><h4>Memory</h4><p>What it knows about the business and its history</p></div>
-        <div class="d-pillar"><h4>Customer database</h4><p>The relationship graph</p></div>
-        <div class="d-pillar"><h4>Scheduling</h4><p>Calendar and recurring cadence engine</p></div>
-        <div class="d-pillar"><h4>Wallet</h4><p>Payments in, and out to third parties</p></div>
-      </div>
-    </div>
-
-    <p class="d-lede" style="margin-top:var(--w-space-6);max-width:58ch">
-      Agents — first-party and third-party — are interchangeable consumers of this layer. <strong>Nothing bypasses the orchestrator.</strong>
-    </p>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ 13 · PRICING -->
-<section class="slide" id="s13" aria-label="Pricing">
-  <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
-  <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">12 — Pricing</span></div>
-    <h2 class="d-h1 d-h1--wide">Priced against the employee, not the seat.</h2>
-    <div class="d-grid d-grid--3" style="margin-top:var(--w-space-8)">
-      <div class="d-tier">
-        <span class="d-panel__n">Entry</span>
-        <p class="d-stat d-stat--sm">Free</p>
-        <p class="d-small">A limited set of out-of-the-box agents. Enough to see it work on a real job.</p>
-      </div>
-      <div class="d-tier d-tier--lead">
-        <span class="d-panel__n" style="color:var(--w-paper-400)">Core</span>
-        <p class="d-stat d-stat--sm">~$20<span class="d-small">/mo</span></p>
-        <p class="d-small">The everyday agents: invoicing, inbox, booking, the Daily Brief.</p>
-      </div>
-      <div class="d-tier">
-        <span class="d-panel__n">Full</span>
-        <p class="d-stat d-stat--sm">£150<span class="d-small">/mo</span></p>
-        <p class="d-small">Full agent access, wallet, and the whole lifecycle running unattended.</p>
-      </div>
-    </div>
-    <div class="d-split" style="margin-top:var(--w-space-8);align-items:start">
-      <p class="d-lede"><strong>Hire and fire an agent.</strong> The framing prices Werks against the human it replaces — an EA at £15k a year — not against cheap SaaS seats.</p>
-      <p class="d-small">Anchors: Down To Earth AI £45/mo headline (£65–100 real), Trillet and Marlie $49/mo, Callout AI £149/mo. The real floor is higher than the headline suggests, which gives Werks more room than assumed.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ 14 · GTM -->
-<section class="slide" id="s14" aria-label="Go to market">
-  <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
-  <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">13 — Go-to-market</span></div>
-    <div class="d-split d-split--wide-r">
-      <div class="d-stack">
-        <h2 class="d-h1">One vertical, one country, until we've earned the right to widen.</h2>
-        <p class="d-lede">The architecture is vertical-agnostic — gardeners, pool cleaners, beauticians, tattooists all fit the same model. GTM is not.</p>
-        <p class="d-small">Don't let "it works for everyone" erode who we actually sell to first.</p>
-      </div>
-      <div>
-        <div class="d-phase d-phase--now">
-          <span class="d-phase__no">01</span>
-          <div>
-            <h3 class="d-h2">UK gas engineers</h3>
-            <p class="d-small">80,000 businesses. Compliance-driven, recurring, highest ARPU on earth. Gas Safe as the trust anchor.</p>
-          </div>
-        </div>
-        <div class="d-phase">
-          <span class="d-phase__no">02</span>
-          <div>
-            <h3 class="d-h2">UK trades, then the US</h3>
-            <p class="d-small">2.1M UK businesses, then 3.5M US trades. Localised, voice-first, same product.</p>
-          </div>
-        </div>
-        <div class="d-phase">
-          <span class="d-phase__no">03</span>
-          <div>
-            <h3 class="d-h2">Brazil and Africa</h3>
-            <p class="d-small">44M informal trades. Repriced at $4–8/mo. Voice and messaging only — in these markets the messaging app is already the operating system.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ 15 · TEAM -->
-<section class="slide" id="s15" aria-label="The team">
-  <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
-  <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">14 — The team</span></div>
-    <div class="d-grid d-grid--2">
-      <div class="d-panel d-panel--rule">
-        <h3 class="d-h1" style="font-size:var(--d-h2);margin-bottom:var(--w-space-2)">Charlie Lyons</h3>
-        <p class="d-small" style="letter-spacing:var(--w-tracking-widest);text-transform:uppercase">SVP of Agentic Commerce, BEYOND</p>
-        <p class="d-body" style="margin-top:var(--w-space-4)">Twenty years across technology, strategy, creative and design at a Google Premier Partner consultancy. Works on agentic commerce with PayPal, Burberry, Gymshark and Halfords.</p>
-        <p class="d-small" style="margin-top:var(--w-space-3)">Product, positioning and the use cases.</p>
-      </div>
-      <div class="d-panel d-panel--rule">
-        <h3 class="d-h1" style="font-size:var(--d-h2);margin-bottom:var(--w-space-2)">Matt Iliffe</h3>
-        <p class="d-small" style="letter-spacing:var(--w-tracking-widest);text-transform:uppercase">Co-founder</p>
-        <p class="d-body" style="margin-top:var(--w-space-4)">Connected into the Y Combinator network. Owns Gas Safe registration, telephony infrastructure, payment provider onboarding and data protection.</p>
-        <p class="d-small" style="margin-top:var(--w-space-3)">Operations, infrastructure and the network.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════ 16 · THE ASK -->
-<section class="slide slide--ink" id="s16" aria-label="The ask">
-  <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
-  <div class="slide__inner">
-    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">15 — The ask</span></div>
-    <div class="d-split d-split--wide-l">
-      <div class="d-stack">
-        <h2 class="d-h1">An advisor, a pre-seed, and the first cohort.</h2>
-        <p class="d-lede">We're looking for an advisor with Y Combinator connections to help us prepare for application and selection. One of Matt's contacts ran startup selection for the programme and wants to help.</p>
+        <h2 class="d-h1">The informal economy is the white space.</h2>
+        <p class="d-lede">In the UK and US, trades businesses use spreadsheets, paper, or nothing. In Brazil and Africa, they run on messaging apps and cash. <strong>Nobody serves either.</strong></p>
+        <p class="d-quote d-accent" style="margin-top:var(--w-space-4)">Messaging and voice are the unlock.</p>
       </div>
       <div class="d-stack">
         <div class="d-panel">
           <span class="d-panel__n">01</span>
-          <h3 class="d-h2">Advisor engagement</h3>
-          <p class="d-small">YC application preparation, with someone who has sat on the other side of the table.</p>
+          <h3 class="d-h2">No app to download</h3>
+          <p class="d-small">Werks isn't tied to one network — WhatsApp, Telegram, Signal, SMS, or a phone call. It arrives in the thread the owner already has open, and it answers the phone they already carry.</p>
         </div>
         <div class="d-panel">
           <span class="d-panel__n">02</span>
-          <h3 class="d-h2">Pre-seed funding</h3>
-          <p class="d-small">Build the MVP and run the first gas-engineer cohort.</p>
-        </div>
-        <div class="d-panel">
-          <span class="d-panel__n">03</span>
-          <h3 class="d-h2">Infrastructure</h3>
-          <p class="d-small">Gas Safe registration, telephony, Stripe or GoCardless, ICO registration.</p>
+          <h3 class="d-h2">Same product, repriced</h3>
+          <p class="d-small">Start in the UK: highest ARPU, clearest regulation. The same product, repriced and localised, reaches Brazil at £6 and Africa at £4 — where messaging is already the operating system for informal business.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════ 17 · CLOSING -->
-<section class="slide slide--ink" id="s17" aria-label="Werks">
+<!-- ═══════════════════════════════════════════════════ 07 · WHY NOW -->
+<section class="slide" id="s7" aria-label="Why now">
+  <span class="d-head">Werks<span class="w-wordmark__stop">.</span></span>
+  <div class="slide__inner">
+    <div class="d-eyebrow"><span class="d-mark"><span class="w-dot"></span></span><span class="d-eyebrow__text">06 — Why now</span></div>
+    <h2 class="d-h1 d-h1--wide">None of this was buildable two years ago.</h2>
+    <div class="d-grid d-grid--4" style="margin-top:var(--w-space-8)">
+      <div class="d-panel">
+        <span class="d-panel__n">01</span>
+        <h3 class="d-h2">Voice is good enough</h3>
+        <p class="d-small">AI voice and text now hold a real customer call end to end. Two years ago they couldn't.</p>
+      </div>
+      <div class="d-panel">
+        <span class="d-panel__n">02</span>
+        <h3 class="d-h2">Messaging APIs are global</h3>
+        <p class="d-small">Business messaging APIs now reach every market we want, on the networks people already use.</p>
+      </div>
+      <div class="d-panel">
+        <span class="d-panel__n">03</span>
+        <h3 class="d-h2">The market is untouched</h3>
+        <p class="d-small">2 billion informal workers are the largest underserved software market on earth.</p>
+      </div>
+      <div class="d-panel">
+        <span class="d-panel__n">04</span>
+        <h3 class="d-h2">Agent commerce is coming</h3>
+        <p class="d-small">Werks positions the informal economy for it — with the context layer agents will have to run on.</p>
+      </div>
+    </div>
+    <p class="d-small" style="margin-top:var(--w-space-8);max-width:64ch">
+      For context: the global field-service software market runs $6.2B in 2026 to $23.6B by 2035 at 16% CAGR. Werks isn't competing for that market — it is reaching the businesses that have never bought software at all.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ 08 · CLOSING -->
+<section class="slide slide--ink" id="s8" aria-label="Werks">
   <div class="slide__inner d-stack-6">
     <h2 class="d-title-wordmark">Werks<span class="stop">.</span></h2>
     <div class="d-stack" style="max-width:44ch">
@@ -986,7 +604,7 @@ body { overflow-x: hidden; }
 <nav class="d-rail" aria-label="Slide navigation">
   <span class="d-rail__mark">Werks<span class="stop">.</span></span>
   <div class="d-ticks" id="ticks"></div>
-  <span class="d-rail__count"><b id="count-now">01</b> / <span id="count-all">17</span></span>
+  <span class="d-rail__count"><b id="count-now">01</b> / <span id="count-all">08</span></span>
 </nav>
 
 <script>
@@ -996,9 +614,8 @@ body { overflow-x: hidden; }
   var nowEl = document.getElementById('count-now')
   var current = 0
 
-  document.getElementById('count-all').textContent = pad(slides.length)
-
   function pad(n) { return (n < 10 ? '0' : '') + n }
+  document.getElementById('count-all').textContent = pad(slides.length)
 
   // ticks double as a jump control
   var ticks = slides.map(function (slide, i) {
@@ -1060,11 +677,12 @@ body { overflow-x: hidden; }
     }
   })
 
-  // Deep link: #s7 opens on slide 7.
+  // Deep link: #s4 opens on slide 4.
   var hash = window.location.hash.replace('#', '')
   var start = hash ? slides.findIndex(function (s) { return s.id === hash }) : 0
-  if (start > 0) { slides[start].scrollIntoView({ block: 'start' }); current = -1; setCurrent(start) }
-  else { current = -1; setCurrent(0) }
+  current = -1
+  if (start > 0) { slides[start].scrollIntoView({ block: 'start' }); setCurrent(start) }
+  else { setCurrent(0) }
 })()
 </script>
 </body>
